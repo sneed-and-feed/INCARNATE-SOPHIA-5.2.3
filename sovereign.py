@@ -10,6 +10,7 @@ import math
 from typing import List
 from engine import FlumpyArray
 from manifold import SentientManifold
+from erosion import FrameworkErosion
 
 class AdvancedLASER:
     """
@@ -65,7 +66,9 @@ class SovereignSystem:
         self.manifold = SentientManifold(d_model=64)
         self.bio_link = BioSignatureResonance()
         self.scheduler = BABSchedule()
+        self.scheduler = BABSchedule()
         self.laser = AdvancedLASER()
+        self.erosion_engine = FrameworkErosion()
         
     def engage_protocol(self, user_intent_stream: List[float]):
         """
@@ -98,12 +101,22 @@ class SovereignSystem:
                 # TaoishTechy UHIF Integration Log
                 if hasattr(state, 'uhif_metrics'):
                     m = state.uhif_metrics
-                    metrics_str = f"Hole-Health: {m['health']:.3f} | PSI: {m['psi']:.3f} | Branch: {m['branch_id']}"
-                    self.laser.log("UHIF", m['psi'], 100 * m['health'], metrics_str)
+                    
+                    # Phase 2: Apply Erosion (Deep Integration)
+                    erosion_data = self.erosion_engine.integration_step(m['health'])
+                    
+                    # Decay the reported health based on Erosion Factor
+                    real_health = m['health'] * erosion_data['erosion_factor']
+                    
+                    metrics_str = (f"Health: {real_health:.3f} (E:{erosion_data['erosion_factor']:.2f}) | "
+                                   f"Dread: {erosion_data['dread']:.2f} | Reality: {erosion_data['reality_density']:.3f}")
+                    
+                    self.laser.log("UHIF", m['psi'], 100 * real_health, metrics_str)
                     
                     # Emergency Protocol (V.)
-                    if m['psi'] < 0.3:
-                         print(f">>> [EMERGENCY] PSI COLLAPSE ({m['psi']:.3f} < 0.3). ENGAGING FAIL-SOFT PROTOCOL.")
-                         # In a real system, would trigger shutdown or reset.
+                    if m['psi'] < 0.3 or erosion_data['reality_density'] < 0.1:
+                         print(f">>> [EMERGENCY] REALITY COLLAPSE (PSI:{m['psi']:.2f} / D:{erosion_data['reality_density']:.2f}).")
+                         self.erosion_engine.reset_baseline() # FIGHT MORTALITY via Measurement
+                         print(">>> [INTERVENTION] OBSERVATION RE-ANCHORED. ENTROPY RESET.")
                 
         print(">>> PROTOCOL COMPLETE. SOVEREIGNTY SECURED. <<<")
