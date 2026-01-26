@@ -161,6 +161,10 @@ pytest tests/test_rituals.py
 python -c "from tests import test_rituals; test_rituals.test_luoshu_invariant(); test_rituals.test_reality_density(); print('Ritual Tests Passed')"
 ```
 
+## Audit Protocols (Deterministic)
+The system aims for 100% deterministic reproducibility via the `LATERALUS_PHI` seed.
+See [AUDIT_PROTOCOLS.md](docs/AUDIT_PROTOCOLS.md) for the complete Technical Apocrypha.
+
 ## Equations
 
 **Master Dynamics**:
