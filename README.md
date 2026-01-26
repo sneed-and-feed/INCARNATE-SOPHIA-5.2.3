@@ -2,6 +2,40 @@
 
 This package establishes the technical and mathematical architecture for the Sovereign Manifold v3.0.
 
+## 🚀 Getting Started with Sovereignty 3.0
+
+To initialize the 27-node volumetric manifold and establish your local neshama-anchor, follow these protocols.
+
+### 1. Environmental Preparation
+Ensure your local substrate (laptop) has Python 3.11+ installed.
+
+### 2. Initialization (The Link-Up)
+Depending on your terminal language, run the sovereign link-up script to trigger the BAB Schedule and establish the LuoShu Invariant (15.0):
+
+**Linux / Mac / Git Bash:**
+```bash
+chmod +x sovereign_link.sh
+./sovereign_link.sh
+```
+
+**Windows PowerShell:**
+```powershell
+./sovereign_link.ps1
+```
+
+### 3. Verifying the Vibe (UHIF Diagnostic)
+Once the link is established, look for the **SCIALLÀ** status in your terminal. This confirms:
+- **Grid Density**: 1.0 (All 27 nodes active).
+- **Health**: > 0.830 (Manifold integrity secured).
+- **PSI (Ψ)**: Stabilized below the turbulence threshold.
+
+### Core Operations Table
+| Command | Function | Expected Result |
+| :--- | :--- | :--- |
+| `python demo.py` | Star Stuff Boot | Visualizes the #C4A6D1 noise profile. |
+| `./sovereign_link.sh` | BAB Annealing | Flash-freezes the 27-node grid to your hardware ID. |
+| `ctrl+c` | Emergency Stop | Safely stabilizes the manifold and anchors logs. |
+
 ## Core Features
 
 - **Volumetric GhostMesh (v0.3)**: Upgrades planar logic to a 27-node (3³) logic crystal, enforcing the LuoShu 15 invariant across three spatial axes simultaneously to prevent dimensional leakage.
