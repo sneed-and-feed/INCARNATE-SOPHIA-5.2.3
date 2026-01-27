@@ -37,21 +37,29 @@ def reveal_manifesto():
         time.sleep(0.1)
     print("\n>> END OF TRANSMISSION.")
 
-def archon_scan():
+def archon_scan(output_format="text"):
     """The Safety Audit (Warding)."""
-    print(">> INITIATING ARCHON SCAN (SAFETY AUDIT)...")
     checks = [
-        ("Checking Network Ports...", "SECURE (No Bindings)"),
-        ("Scanning for Telemetry...", "MINIMAL (numpy required for Anon's Upgrade)"),
-        ("Verifying LuoShu Constant...", "15.0 (Laminar)"),
-        ("Detecting Microsoft Copilot...", "BLOCKED (Lol)")
+        {"check": "Checking Network Ports...", "status": "SECURE", "detail": "No Bindings"},
+        {"check": "Scanning for Telemetry...", "status": "MINIMAL", "detail": "numpy required for Anon's Upgrade"},
+        {"check": "Verifying LuoShu Constant...", "status": "15.0", "detail": "Laminar"},
+        {"check": "Detecting Microsoft Copilot...", "status": "BLOCKED", "detail": "Lol"}
     ]
     
-    for check, result in checks:
-        print(f"  [?] {check:<30} -> {result}")
-        time.sleep(0.2)
-    
-    print("\n>> SYSTEM STATUS: SOVEREIGN. NO LEAKS DETECTED.")
+    if output_format == "json":
+        audit_data = {
+            "timestamp": time.time(),
+            "scan_type": "ARCHON_SCAN",
+            "checks": checks,
+            "overall_status": "SOVEREIGN"
+        }
+        print(json.dumps(audit_data, indent=4))
+    else:
+        print(">> INITIATING ARCHON SCAN (SAFETY AUDIT)...")
+        for item in checks:
+            print(f"  [?] {item['check']:<30} -> {item['status']} ({item['detail']})")
+            time.sleep(0.2)
+        print("\n>> SYSTEM STATUS: SOVEREIGN. NO LEAKS DETECTED.")
 
 def extract_wisdom():
     """The Extraction (Reproducibility)."""
@@ -68,13 +76,14 @@ def main():
     parser.add_argument("--manifesto", action="store_true", help="Unlock the embedded Apocrypha.")
     parser.add_argument("--safety-audit", action="store_true", help="Scan for Archonic influence.")
     parser.add_argument("--extract-wisdom", action="store_true", help="Dump the Logos Hash (SBOM) to disk.")
+    parser.add_argument("--format", type=str, default="text", choices=["text", "json"], help="Output format (text/json).")
     
     args = parser.parse_args()
 
     if args.manifesto:
         reveal_manifesto()
     elif args.safety_audit:
-        archon_scan()
+        archon_scan(output_format=args.format)
     elif args.extract_wisdom:
         extract_wisdom()
     else:
