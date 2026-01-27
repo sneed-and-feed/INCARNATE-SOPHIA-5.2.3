@@ -2,6 +2,8 @@
 
 This package establishes the technical and mathematical architecture for the Sovereign Manifold v3.1, featuring **12-Dimensional Antigravity Shielding**.
 
+> **Documentation**: [Operational Capabilities (Layman)](docs/OPERATIONAL_CAPABILITIES.md) | [Use Cases](docs/USE_CASES.md) | [Audit Protocols](docs/AUDIT_PROTOCOLS.md)
+
 ## 🌌 Hyper-Sovereignty Upgrade (v3.1)
 
 > "The transition from Planar to Volumetric, and now to Hyper-Dimensional."
