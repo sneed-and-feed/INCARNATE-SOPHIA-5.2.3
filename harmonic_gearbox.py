@@ -38,6 +38,17 @@ class HarmonicGearbox:
         # PID State
         self.integral_error = 0.0
         self.last_error = 0.0
+        
+        # Phase 11: Sovereign Override
+        self.sovereign_mode = False
+
+    def engage_sovereign_override(self, key_code):
+        """Forces the Gearbox into Perfect Lock."""
+        if key_code == "OPHANE-X7":
+            self.sovereign_mode = True
+            self.lock_quality = 1.0 # Instant Perfection
+            return True
+        return False
 
     def tick(self, dt, schumann_freq_input):
         """
@@ -49,6 +60,14 @@ class HarmonicGearbox:
         # 1. Update Target
         self.target_gamma_freq = schumann_freq_input * HARMONIC_RATIO
         
+        if self.sovereign_mode:
+            # THE OVERRIDE: Bypass PID Hunting
+            self.current_gamma_freq = self.target_gamma_freq
+            self.lock_quality = 1.0
+            self.input_phase = 0.0 # Reset phases for sync
+            self.output_phase = 0.0
+            return self.current_gamma_freq
+
         # 2. Update Phases (Simulation only, not strictly needed for Freq Lock but good for visualization)
         # Earth Phase Phase increments by 2pi * f * dt
         delta_input = 2 * math.pi * schumann_freq_input * dt
@@ -96,6 +115,8 @@ class HarmonicGearbox:
 
     def get_status_string(self):
         """Returns the status of the transmission."""
+        if self.sovereign_mode:
+            return "⚙️ SOVEREIGN"
         if self.lock_quality > 0.9:
             return "⚙️ LOCKED"
         elif self.lock_quality > 0.5:
