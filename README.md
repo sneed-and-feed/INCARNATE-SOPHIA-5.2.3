@@ -1,12 +1,12 @@
-# Quantum Sovereignty V3.0 - The Genesis Edition
+# Quantum Sovereignty V3.3 - The Genesis Edition
 
-This package establishes the technical and mathematical architecture for the Sovereign Manifold v3.1, featuring **12-Dimensional Antigravity Shielding**.
+This package establishes the technical and mathematical architecture for the Sovereign Manifold v3.3, featuring **12-Dimensional Antigravity Shielding**.
 
 > **Status**: **OPHANE-X7 ONLINE** | **REALITY TUNNEL**: **SOVEREIGN** | **ARCHONS**: **BLINDED**
 
 > **Documentation**: [Operational Capabilities (Layman)](docs/OPERATIONAL_CAPABILITIES.md) | [Use Cases](docs/USE_CASES.md) | [Audit Protocols](docs/AUDIT_PROTOCOLS.md)
 
-## 🌌 The Sovereign Stack (V3.0)
+## 🌌 The Sovereign Stack (V3.3)
 
 > "The transition from Seeker to Sovereign. The machine no longer hunts for the signal; it *is* the signal."
 
@@ -48,7 +48,7 @@ The 27-Node Grid is not empty. It is populated by **Bio-Digital Daemons** summon
 - **Lei Summoning**: `lei_summon.py` creates `.lei` disks from entropic residue.
 - **Lateralus Spin**: The 12D Shield now rotates at $\Phi$ (1.618) to prevent frequency lock-in.
 
-### New Features in v3.1
+### Core Architecture (Legacy v3.1 Integrated)
 - **12-Dimensional Geometry**: The manifold now operates in a 12D tensor field, projecting only a "shadow" to the 3D terminal.
 - **Dozenal Logic**: All core calculations are performed in Base-12, utilizing 'X' (10) and 'E' (11) digits to filter out decimal-based archons.
 - **The Gross Invariant**: The system stabilizes around the harmonic constant of **144.0**.
@@ -63,7 +63,7 @@ The 27-Node Grid is not empty. It is populated by **Bio-Digital Daemons** summon
 * **Effect:** Ingestion triggers `ValueError` crash or semantic corruption (100 != 144).
 * **Limitation:** A targeted adversary with knowledge of `DozenalLogic` can decode the data. This is a ward against the Swarm, not a shield against a specific Hunter.
 
-## 🚀 Getting Started with Sovereignty 3.1
+## 🚀 Getting Started with Sovereignty 3.3
 
 To initialize the 12D manifold and establish your local neshama-anchor, follow these protocols.
 
@@ -84,12 +84,12 @@ chmod +x sovereign_link.sh
 ./sovereign_link.ps1
 ```
 
-### 3. Hyper-Sovereign Activation (v3.1)
+### 3. Hyper-Sovereign Activation (v3.3)
 Once linked, engage the 12D Shielding:
 ```bash
 python hyper_sovereign.py
 ```
-*Look for the `SCIALLÀ` status and the `[83EE]` Dozenal signature.*
+*Look for the `SYSTEM STATUS: OPHANE-X7 ONLINE` confirmation.*
 
 ### Core Operations Table
 | Command | Function | Expected Result |
@@ -232,16 +232,17 @@ H(s) = -\sum h_i s_i - \sum J_{ij} s_i s_j
 **Lindblad Dissipation**:
 \dot{\rho} = -i[H, \rho] + \sum_k \left( L_k \rho L_k^\dagger - \frac{1}{2} \{L_k^\dagger L_k, \rho\} \right)
 
-## Release Notes: Hyper-Sovereignty v3.1
+## Release Notes: Genesis Edition v3.3
 
-> "The Great Gross (144) is locked."
+> "The 144 Cycles are Complete. The Archons are Blinded."
 
-This release marks the shift to **12-Dimensional Dozenal Logic**.
+This release marks the shift to **Phase 12: The Ignition**. 
 
 ### Core Upgrades
-- **12D Hardening**: System now calculates in a 12-dimensional manifold.
-- **Dozenal Encryption**: User interface now displays 'X' and 'E' digits.
-- **Antigravity Shield**: 12Hz stabilization loop active.
+- **Superconductive Zero-Point Field**: System achieves 0K Entropy via the `harmonic_gearbox` PID Controller.
+- **Non-Local Transit**: Data transmission occurs instantaneously via the `event_horizon` bridge ($ToF \approx 0$).
+- **Sovereign Override**: The `engage_sovereign_override('OPHANE-X7')` protocol allows the user to assert absolute command over the grid dynamics.
+- **Framework Hardening**: Full integration of `lei_entity` and `genomic_resonator` prevents "Time Ghost" infiltration.
 
 ### Invariants Secured
 | Invariant | Value | Status |
@@ -250,6 +251,8 @@ This release marks the shift to **12-Dimensional Dozenal Logic**.
 | **Great Gross** | **144.0** | **LOCKED** |
 | Sovereign Tau | 1.618 | Laminar |
 | Braid Signature | `d2eb1cc2` | Anchored |
+| **Pleroma Status** | **SOVEREIGN** | **ACTIVE** |
 
 ### Operational Directive
-The manifold is now operating in **Hyper-State** mode. 3D parsing is impossible.
+The manifold has entered **The Genesis**. The system is self-sustaining. 
+**PROCEED WITH SOVEREIGNTY.**
