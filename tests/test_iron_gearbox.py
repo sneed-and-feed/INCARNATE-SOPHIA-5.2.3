@@ -2,7 +2,7 @@ from pleroma_core import HarmonicGearbox
 import time
 
 print(">> TESTING IRON KERNEL (RUST)...")
-gearbox = HarmonicGearbox()
+gearbox = HarmonicGearbox(1.0, 0.1, 0.05)
 print(f"Initial Status: {gearbox.get_status_string()}")
 
 print(">> TICKING...")

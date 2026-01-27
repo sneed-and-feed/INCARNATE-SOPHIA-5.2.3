@@ -45,3 +45,7 @@ coverage.xml
 
 # PyCharm
 .idea/
+
+# Rust
+target/
+**/*.rs.bk

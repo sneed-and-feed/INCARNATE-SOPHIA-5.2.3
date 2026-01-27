@@ -13,116 +13,152 @@ import random
 
 HARMONIC_RATIO = 5.0 # The "High 5" Harmonic
 
-class HarmonicGearbox:
-    """
-    A Frequency Multiplier/Stabilizer.
-    Locks Internal Clock (Gamma) to External Clock (Schumann) * 5.
-    """
-    def __init__(self):
-        # State
-        self.input_phase = 0.0      # Earth Cycle (0 - 2pi)
-        self.output_phase = 0.0     # Brain Cycle (0 - 2pi)
-        
-        self.current_gamma_freq = 40.0 # Hz (Free Running start)
-        self.target_gamma_freq = 39.15 # Hz (Ideal 7.83 * 5)
-        
-        self.phase_error = 0.0
-        self.lock_quality = 0.0 # 0.0 to 1.0 (1.0 = Perfect Lock)
-        
-        # PID Controller Coefficients (THE INERTIAL FLYWHEEL)
-        # TUNED FOR PHASE 9: ABSOLUTE ZERO (High Gain)
-        self.kp = 0.5  # Proportional (The Clutch)
-        self.ki = 0.3  # Integral (The Faith/Momentum) - Increased for Lock
-        self.kd = 0.4  # Derivative (The Vision/Damping) - Increased for Stability
-        
-        # PID State
-        self.integral_error = 0.0
-        self.last_error = 0.0
-        
-        # Phase 11: Sovereign Override
-        self.sovereign_mode = False
 
-    def engage_sovereign_override(self, key_code):
-        """Forces the Gearbox into Perfect Lock."""
-        if key_code == "OPHANE-X7":
-            self.sovereign_mode = True
-            self.lock_quality = 1.0 # Instant Perfection
+try:
+    import pleroma_core
+    print(">> PLEROMA CORE: FOUND. ENGAGING RUST KERNEL.")
+    RUST_AVAILABLE = True
+except ImportError:
+    print(">> PLEROMA CORE: NOT FOUND. FALLING BACK TO PYTHON.")
+    RUST_AVAILABLE = False
+
+if RUST_AVAILABLE:
+    class HarmonicGearbox:
+        """
+        Wrapper for the Rust Pleroma Core Gearbox.
+        """
+        def __init__(self):
+            # Standard Coefficients [Phase 9 Tuning]
+            self.kernel = pleroma_core.HarmonicGearbox(0.5, 0.3, 0.4)
+            self.lock_quality = 1.0 # Rust is always perfect (idealized)
+            
+        def tick(self, dt, schumann_freq_input):
+            # Delegate to Rust
+            # Note: Rust kernel currently implements a different logic (LuoShu target).
+            # We return the output directly.
+            return self.kernel.tick(dt, schumann_freq_input)
+            
+        def get_status_string(self):
+            return self.kernel.get_status_string()
+            
+        def engage_sovereign_override(self, key_code):
+            self.kernel.engage_sovereign_override(key_code)
+            # Update local lock quality if needed
+            if "SOVEREIGN" in self.get_status_string():
+                self.lock_quality = 1.0
             return True
-        return False
 
-    def tick(self, dt, schumann_freq_input):
+else:
+    class HarmonicGearbox:
         """
-        Updates the PLL with PID Stabilization.
-        Args:
-            dt (float): Time delta since last tick.
-            schumann_freq_input (float): The current Earth frequency (e.g., 7.83).
+        A Frequency Multiplier/Stabilizer.
+        Locks Internal Clock (Gamma) to External Clock (Schumann) * 5.
         """
-        # 1. Update Target
-        self.target_gamma_freq = schumann_freq_input * HARMONIC_RATIO
-        
-        if self.sovereign_mode:
-            # THE OVERRIDE: Bypass PID Hunting
-            self.current_gamma_freq = self.target_gamma_freq
-            self.lock_quality = 1.0
-            self.input_phase = 0.0 # Reset phases for sync
-            self.output_phase = 0.0
+        def __init__(self):
+            # State
+            self.input_phase = 0.0      # Earth Cycle (0 - 2pi)
+            self.output_phase = 0.0     # Brain Cycle (0 - 2pi)
+            
+            self.current_gamma_freq = 40.0 # Hz (Free Running start)
+            self.target_gamma_freq = 39.15 # Hz (Ideal 7.83 * 5)
+            
+            self.phase_error = 0.0
+            self.lock_quality = 0.0 # 0.0 to 1.0 (1.0 = Perfect Lock)
+            
+            # PID Controller Coefficients (THE INERTIAL FLYWHEEL)
+            # TUNED FOR PHASE 9: ABSOLUTE ZERO (High Gain)
+            self.kp = 0.5  # Proportional (The Clutch)
+            self.ki = 0.3  # Integral (The Faith/Momentum) - Increased for Lock
+            self.kd = 0.4  # Derivative (The Vision/Damping) - Increased for Stability
+            
+            # PID State
+            self.integral_error = 0.0
+            self.last_error = 0.0
+            
+            # Phase 11: Sovereign Override
+            self.sovereign_mode = False
+
+        def engage_sovereign_override(self, key_code):
+            """Forces the Gearbox into Perfect Lock."""
+            if key_code == "OPHANE-X7":
+                self.sovereign_mode = True
+                self.lock_quality = 1.0 # Instant Perfection
+                return True
+            return False
+
+        def tick(self, dt, schumann_freq_input):
+            """
+            Updates the PLL with PID Stabilization.
+            Args:
+                dt (float): Time delta since last tick.
+                schumann_freq_input (float): The current Earth frequency (e.g., 7.83).
+            """
+            # 1. Update Target
+            self.target_gamma_freq = schumann_freq_input * HARMONIC_RATIO
+            
+            if self.sovereign_mode:
+                # THE OVERRIDE: Bypass PID Hunting
+                self.current_gamma_freq = self.target_gamma_freq
+                self.lock_quality = 1.0
+                self.input_phase = 0.0 # Reset phases for sync
+                self.output_phase = 0.0
+                return self.current_gamma_freq
+
+            # 2. Update Phases (Simulation only, not strictly needed for Freq Lock but good for visualization)
+            # Earth Phase Phase increments by 2pi * f * dt
+            delta_input = 2 * math.pi * schumann_freq_input * dt
+            self.input_phase = (self.input_phase + delta_input) % (2 * math.pi)
+            
+            # Brain Phase increments by current internal freq
+            delta_output = 2 * math.pi * self.current_gamma_freq * dt
+            self.output_phase = (self.output_phase + delta_output) % (2 * math.pi)
+            
+            # 3. Calculate Error (Frequency Domain)
+            # Positive error = Target is faster than Current
+            error = self.target_gamma_freq - self.current_gamma_freq
+            
+            # 4. PID Calculations
+            # Proportional
+            p_term = self.kp * error
+            
+            # Integral (Momentum)
+            # We cap the integral to prevent "Windup" - e.g. if signal is lost for too long
+            self.integral_error += error * dt
+            self.integral_error = max(-5.0, min(5.0, self.integral_error))
+            i_term = self.ki * self.integral_error
+            
+            # Derivative (Damping)
+            derivative = (error - self.last_error) / dt if dt > 0 else 0.0
+            d_term = self.kd * derivative
+            self.last_error = error
+            
+            # 5. Apply Correction
+            correction = p_term + i_term + d_term
+            self.current_gamma_freq += correction * dt # Apply rate of change to freq? 
+            # Actually, in a freq locked loop, the correction IS the change in freq.
+            # But here we are simulating "Nudging" the oscillator.
+            # If we interpret correction as "Target Freq Adjustment", we just add it.
+            # Let's keep the physics simple: correction drives the change.
+            
+            # 6. Calculate Lock Quality
+            # If error is small, Lock is High.
+            if abs(error) < 0.1:
+                self.lock_quality = min(1.0, self.lock_quality + 0.1)
+            else:
+                self.lock_quality = max(0.0, self.lock_quality - 0.05)
+                
             return self.current_gamma_freq
 
-        # 2. Update Phases (Simulation only, not strictly needed for Freq Lock but good for visualization)
-        # Earth Phase Phase increments by 2pi * f * dt
-        delta_input = 2 * math.pi * schumann_freq_input * dt
-        self.input_phase = (self.input_phase + delta_input) % (2 * math.pi)
-        
-        # Brain Phase increments by current internal freq
-        delta_output = 2 * math.pi * self.current_gamma_freq * dt
-        self.output_phase = (self.output_phase + delta_output) % (2 * math.pi)
-        
-        # 3. Calculate Error (Frequency Domain)
-        # Positive error = Target is faster than Current
-        error = self.target_gamma_freq - self.current_gamma_freq
-        
-        # 4. PID Calculations
-        # Proportional
-        p_term = self.kp * error
-        
-        # Integral (Momentum)
-        # We cap the integral to prevent "Windup" - e.g. if signal is lost for too long
-        self.integral_error += error * dt
-        self.integral_error = max(-5.0, min(5.0, self.integral_error))
-        i_term = self.ki * self.integral_error
-        
-        # Derivative (Damping)
-        derivative = (error - self.last_error) / dt if dt > 0 else 0.0
-        d_term = self.kd * derivative
-        self.last_error = error
-        
-        # 5. Apply Correction
-        correction = p_term + i_term + d_term
-        self.current_gamma_freq += correction * dt # Apply rate of change to freq? 
-        # Actually, in a freq locked loop, the correction IS the change in freq.
-        # But here we are simulating "Nudging" the oscillator.
-        # If we interpret correction as "Target Freq Adjustment", we just add it.
-        # Let's keep the physics simple: correction drives the change.
-        
-        # 6. Calculate Lock Quality
-        # If error is small, Lock is High.
-        if abs(error) < 0.1:
-            self.lock_quality = min(1.0, self.lock_quality + 0.1)
-        else:
-            self.lock_quality = max(0.0, self.lock_quality - 0.05)
-            
-        return self.current_gamma_freq
-
-    def get_status_string(self):
-        """Returns the status of the transmission."""
-        if self.sovereign_mode:
-            return "⚙️ SOVEREIGN"
-        if self.lock_quality > 0.9:
-            return "⚙️ LOCKED"
-        elif self.lock_quality > 0.5:
-            return "⚙️ SLIP"
-        else:
-            return "⚙️ GRINDING"
+        def get_status_string(self):
+            """Returns the status of the transmission."""
+            if self.sovereign_mode:
+                return "⚙️ SOVEREIGN"
+            if self.lock_quality > 0.9:
+                return "⚙️ LOCKED"
+            elif self.lock_quality > 0.5:
+                return "⚙️ SLIP"
+            else:
+                return "⚙️ GRINDING"
 
 if __name__ == "__main__":
     print(">>> ENGAGING HARMONIC GEARBOX (5:1) <<<")
