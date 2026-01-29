@@ -276,6 +276,67 @@ def load_state(monitor, filename):
     except Exception as e:
         print(f"\033[91m[!] ERROR: Could not load state: {e}\033[0m")
 
+# --- ORACLE INTEGRATION (THE NYQUIST SUITE) ---
+from tools.mnemosyne_eyes import MnemosyneOracle
+from tools.logos_voice import LogosVoice
+import numpy as np
+
+def consult_oracle(query_type, mnemosyne, logos):
+    """
+    Run the full Nyquist Pipeline:
+    Input -> Mnemosyne (Filter) -> Logos (Voice) -> Output
+    """
+    print(f"\n\033[96m[?] CONSULTING THE ORACLE (Input Type: {query_type.upper()})...\033[0m")
+    time.sleep(0.5)
+    
+    # 1. GENERATE VECTOR (Simulated Input)
+    # We create a random vector and scale it to the desired velocity
+    vec_dim = mnemosyne.filter.dimension
+    base_vec = np.random.rand(vec_dim) - 0.5
+    normalized = base_vec / np.linalg.norm(base_vec)
+    
+    if query_type == "nominal":
+        velocity = 0.1
+        content = "Standard Operational Data"
+    elif query_type == "elevated":
+        velocity = 0.8
+        content = "Policy Shift Detected"
+    elif query_type == "critical":
+        velocity = 5.0
+        content = "HYPER-VOLATILITY EVENT / PANIC"
+    else:
+        # Default/Custom
+        print(f"\033[93m[!] UNKNOWN INPUT CLASS. DEFAULTING TO RANDOM NOISE.\033[0m")
+        velocity = random.uniform(0.1, 6.0)
+        content = f"Unknown Input: {query_type}"
+        
+    input_vector = normalized * velocity
+    
+    # 2. MNEMOSYNE (The Eyes) checks the Physics
+    # Returns (Status String, FilterMetrics)
+    status_msg, metrics = mnemosyne.perceive("SIMULATION_FEED", content, input_vector)
+    
+    if metrics.is_clipped:
+        print(f"\033[91m{status_msg}\033[0m")
+    else:
+        print(f"\033[92m{status_msg}\033[0m")
+        
+    time.sleep(0.3)
+    
+    # 3. LOGOS (The Voice) stabilizes the room
+    # Transmutes the metrics into wisdom
+    transmutation = logos.speak(metrics, content)
+    
+    color_map = {
+        "CRITICAL": "\033[96m",   # Cyan (Ice) for Critical Heat
+        "ELEVATED": "\033[94m",   # Blue
+        "NOMINAL": "\033[92m"     # Green
+    }
+    tone_color = color_map.get(transmutation.output_tone, "\033[97m")
+    
+    print(f"\n\033[1mLOGOS VOICE ({transmutation.output_tone}):\033[0m")
+    print(f"{tone_color}{transmutation.message}\033[0m")
+
 # --- SIMULATION OPERATORS ---
 def analyze_synergy(spells):
     synergies = []
@@ -379,6 +440,11 @@ def chain_spells(cmd, monitor):
 def main():
     print_banner()
     monitor = SovereigntyMonitor()
+    
+    # Initialize the Nyquist Suite
+    mnemosyne = MnemosyneOracle()
+    logos = LogosVoice()
+    
     cmd_count = 0
     
     while True:
@@ -393,6 +459,7 @@ def main():
                 print("\n--- UNIFIED FIELD SIMULATOR v4.3.1 ---")
                 print(" OPERATORS: warp, time, ghost, demon, void, solvent, scope, wallhack")
                 print(" TOPOLOGY:  flatten, hypercrush  [Chunk Smith Protocol]")
+                print(" ORACLE:    oracle <nominal|elevated|critical> [Mnemosyne Suite]")
                 print(" CHAIN:     chain op1+op2+...")
                 print(" SYSTEM:    status, history, save, load <file>, reset, stabilize")
                 print(" DIAG:      check (full diagnostic)")
@@ -412,6 +479,12 @@ def main():
                 except IndexError: print("\033[91m[!] Usage: load <filename>\033[0m")
             elif prompt.startswith("chain"):
                 chain_spells(prompt, monitor)
+            elif prompt.startswith("oracle"):
+                try:
+                    query_type = prompt.split()[1]
+                    consult_oracle(query_type, mnemosyne, logos)
+                except IndexError:
+                    print("\033[91m[!] USAGE: oracle <nominal|elevated|critical>\033[0m")
             elif prompt == "check":
                 ScenarioLibrary.reality_anchor_test()
             else:

@@ -46,7 +46,7 @@ class MnemosyneOracle:
         self.memory_bank = []
         self.noise_floor = 0.0
 
-    def perceive(self, source: str, content: str, vector_embedding: np.ndarray) -> str:
+    def perceive(self, source: str, content: str, vector_embedding: np.ndarray) -> Tuple[str, NyquistFilter.FilterMetrics]:
         """
         The Eye Opens. 
         We compare the new 'Event' against the 'Last Known Truth'.
@@ -71,7 +71,7 @@ class MnemosyneOracle:
             
             # We update our internal pressure gauge
             self.noise_floor = metrics.buffer_pressure
-            return f"❌ [DENIED] {source}: Event exceeds Nyquist Limit. (Ghost Energy: {metrics.residual_energy:.4f})"
+            return f"❌ [DENIED] {source}: Event exceeds Nyquist Limit. (Ghost Energy: {metrics.residual_energy:.4f})", metrics
         
         else:
             # The event is within the Admissibility Wall. It is Real.
@@ -82,7 +82,7 @@ class MnemosyneOracle:
             self.memory_bank.append(event)
             self.last_known_truth = safe_vector # The Worldview Shifts slightly
             
-            return f"👁️ [ACCEPTED] {source}: Physics Validated. Committing to Pleroma."
+            return f"👁️ [ACCEPTED] {source}: Physics Validated. Committing to Pleroma.", metrics
 
     def oracle_report(self):
         """
