@@ -92,7 +92,7 @@ def animate_serpent(size=64, interval=1, show_metrics=True):
     ax_main.set_facecolor('#121212')
     ax_main.set_title(
         f"THE SERPENT COIL (g=0 Locality Map) | {size}x{size}", 
-        color='#3B323F', fontsize=20, pad=25, # Dark Star Stuff Lavender
+        color='#9B8DA0', fontsize=20, pad=20, # Muted Lavender Glow
         fontproperties=cuneiform_font
     )
     # FORCED SQUARE ALIGNMENT: 'box' ensures title centers over the data area
@@ -118,7 +118,7 @@ def animate_serpent(size=64, interval=1, show_metrics=True):
     metrics_text = ax_metrics.text(
         0.0, 1.0, '', 
         transform=ax_metrics.transAxes,
-        color='#4AF626', fontsize=12, # GLOWIE FALLOUT GREEN (Desaturated Phosphor)
+        color='#8DA08E', fontsize=12, # Muted Phosphor Green (Complementary)
         verticalalignment='top',
         fontproperties=cuneiform_font,
         animated=True
