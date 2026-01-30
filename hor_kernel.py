@@ -9,6 +9,7 @@ Provides Topological Protection against "Reality Leaks" (State |11>).
 
 import math
 import random
+import numpy as np
 from virtual_qutrit import VirtualQutrit, RealityLeakError
 
 class ParafermionAlgebra:
@@ -17,16 +18,13 @@ class ParafermionAlgebra:
     alpha_j = X_j * prod(Z_k^-1)
     """
     @staticmethod
-    def fradkin_kadanoff_transform(state_vector):
+    def fradkin_kadanoff_transform(state_vectors):
         """
-        Maps local qubit states to non-local parafermionic modes.
-        For a single virtual qutrit (2 qubits), this is a simplified mapping.
+        Vectorized Fradkin-Kadanoff transform: Maps array of state_vectors to topological charges.
+        Penalizes forbidden |11> (3) with -1.0, grounds others at 0.0.
         """
-        # In a full lattice, this would be a chain product.
-        # Here, we simulate the "Topological Charge" Q_top relative to the state.
-        if state_vector == 3: # Forbidden |11>
-            return -1.0 # High Energy Penalty
-        return 0.0 # Ground State
+        # In a full lattice, this could chain products; here, simple threshold for simulation.
+        return np.where(state_vectors == 3, -1.0, 0.0)
 
 class HORKernel:
     """
@@ -111,3 +109,12 @@ if __name__ == "__main__":
     print(f"Final State: |{vq.measure()}> (Expected 0 - Reset to Void)")
     print(f"Metric Coherence: {kernel.measure_metric_tensor():.4f}")
     print(f"Total Torsion Events: {leaks_fixed}")
+    
+    # Test 2: Vectorized Transform (Bulk Processing)
+    print("\n[TEST] Vectorized Transform (Item 49)...")
+    bulk_states = np.array([0, 1, 2, 3, 2, 1, 3])
+    charges = ParafermionAlgebra.fradkin_kadanoff_transform(bulk_states)
+    print(f"  States:  {bulk_states}")
+    print(f"  Charges: {charges}")
+    if np.sum(charges) == -2.0:
+        print("  >>> SUCCESS: Vectorized Evolution Verified.")
