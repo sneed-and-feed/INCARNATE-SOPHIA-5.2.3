@@ -30,12 +30,12 @@ except ImportError as e:
 plt.rcParams['font.family'] = 'Segoe UI Symbol'
 plt.rcParams['font.sans-serif'] = ['Segoe UI Symbol', 'DejaVu Sans', 'Arial Unicode MS']
 
-def animate_serpent(size=32, interval=10, show_metrics=True):
+def animate_serpent(size=64, interval=1, show_metrics=True):
     """
-    Animates the Serpent Coil with optimized smoothness (Blit=True).
-    The 1:1 trace ritual is restored for fluid motion.
+    Animates the Serpent Coil with high-fidelity 64x64 resolution.
+    Optimized for smoothness (Blit=True, Interval=1).
     """
-    print(f"\n[!] INITIATING SOVEREIGN RITUAL v2.3 (Grid={size}x{size})...")
+    print(f"\n[!] INITIATING SOVEREIGN RITUAL v2.4 (Grid={size}x{size})...")
     
     # Initialize Lunar Clock
     moon = MoonClock()
@@ -51,7 +51,7 @@ def animate_serpent(size=32, interval=10, show_metrics=True):
     X, Y = np.meshgrid(x, y)
     
     # 2. Collapse to 1D
-    print("    >>> WEAVING TIMELINE (1:1 TRACE)...")
+    print("    >>> WEAVING TIMELINE (64x64 HIGH-POLY)...")
     Z = np.array([interleave_bits(xx, yy) for xx, yy in zip(X.flatten(), Y.flatten())])
     
     # 3. Sort to find Path
@@ -61,27 +61,27 @@ def animate_serpent(size=32, interval=10, show_metrics=True):
     
     # 4. Setup Plot
     fig, (ax_main, ax_metrics) = plt.subplots(
-        1, 2, figsize=(16, 9), 
-        facecolor='#050505',
-        gridspec_kw={'width_ratios': [3, 1]}
+        1, 2, figsize=(18, 10), 
+        facecolor='#050505',    # High contrast void
+        gridspec_kw={'width_ratios': [3.5, 1]}
     )
     
     ax_main.set_facecolor('#050505')
     ax_main.set_title(
         f"THE SERPENT COIL | {phase_name.upper()} {icon}", 
-        color='#C4A6D1', fontsize=16, pad=25
+        color='#C4A6D1', fontsize=18, pad=35
     )
     ax_main.axis('off')
     
-    # Ghost Points
-    ax_main.scatter(X.flatten(), Y.flatten(), s=5, c='#0f0f0f', alpha=0.3)
+    # Ghost Points (High Density)
+    ax_main.scatter(X.flatten(), Y.flatten(), s=2, c='#0f0f0f', alpha=0.3)
     
     # The Serpent (Artists for blitting)
-    line, = ax_main.plot([], [], color='#C4A6D1', linewidth=1.2, alpha=0.8, animated=True)
+    line, = ax_main.plot([], [], color='#C4A6D1', linewidth=0.8, alpha=0.7, animated=True)
     
     # The Cursor
     cursor_color = '#ffffff' if illumination > 0.5 else '#8855aa'
-    head, = ax_main.plot([], [], 'o', color=cursor_color, markersize=5, animated=True)
+    head, = ax_main.plot([], [], 'o', color=cursor_color, markersize=4, animated=True)
     
     # Metrics panel
     ax_metrics.set_facecolor('#050505')
@@ -90,10 +90,10 @@ def animate_serpent(size=32, interval=10, show_metrics=True):
     metrics_text = ax_metrics.text(
         0.0, 1.0, '', 
         transform=ax_metrics.transAxes,
-        color='#C4A6D1', fontsize=10, 
+        color='#C4A6D1', fontsize=11, 
         verticalalignment='top',
         family='monospace',
-        animated=True # Enable blitting for metrics
+        animated=True
     )
     
     # State tracking
@@ -111,7 +111,7 @@ def animate_serpent(size=32, interval=10, show_metrics=True):
         return line, head, metrics_text
     
     def update(frame):
-        # 1:1 Rendering for maximum smoothness
+        # We handle the frame sequence to maintain smoothness at 4096 points
         current_x = path_x[:frame]
         current_y = path_y[:frame]
         
@@ -120,8 +120,8 @@ def animate_serpent(size=32, interval=10, show_metrics=True):
         if frame > 0:
             head.set_data([path_x[frame-1]], [path_y[frame-1]])
         
-        # Throttled Metrics Update (to keep smoothness high)
-        if frame % 10 == 0 or frame == state['total_frames']:
+        # Throttled Metrics Update
+        if frame % 50 == 0 or frame == state['total_frames']:
             state['completion'] = (frame / state['total_frames']) * 100
             state['coherence'] = max(0.5, 1.0 - (frame / state['total_frames']) * 0.2)
             
@@ -151,21 +151,22 @@ Bijection:   VERIFIED
 [ LOG ]
 > WEAVING TIME...
 > {icon} {icon} {icon}
+> LOVE IS THE CONSTANT.
             """
             metrics_text.set_text(metrics_str)
         
         # Visual Glitch logic
         if state['tidal_influence'] > 85 and frame % 200 == 0 and np.random.random() > 0.8:
-            head.set_markersize(10)
+            head.set_markersize(8)
         else:
-            head.set_markersize(5)
+            head.set_markersize(4)
             
         return line, head, metrics_text
 
     # 5. Run the Ritual
-    # Re-enabling blit=True for that v1.0 fluid feel
+    # Using range(0, ..., 2) for size=64 preserves smoothness across 4096 frames
     ani = animation.FuncAnimation(
-        fig, update, frames=len(path_x)+1, 
+        fig, update, frames=range(0, len(path_x)+1, 2), 
         init_func=init, blit=True, interval=interval, repeat=False
     )
     
@@ -179,6 +180,6 @@ Bijection:   VERIFIED
     return ani
 
 if __name__ == "__main__":
-    # 32x32 is the sweet spot for high-res fluid animation
-    # Interval=10 for that 'v1.0' rhythmic speed
-    animate_serpent(size=32, interval=10, show_metrics=True)
+    # 64x64 High-Res smoothly animated
+    animate_serpent(size=64, interval=1, show_metrics=True)
+
