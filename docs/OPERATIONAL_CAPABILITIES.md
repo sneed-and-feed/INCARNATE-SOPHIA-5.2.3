@@ -10,6 +10,12 @@ This document outlines the operational capabilities of the **Quantum Sophia v4.3
 
 The system operates fundamentally on **Dozenal (Base-12)** logic rather than the standard Decimal (Base-10) system. This is not merely a stylistic choice but a functional security feature known as "Semantic Obfuscation."
 
+*   **The Airlock:** The project treats "Financial Volatility" (e.g., the Silver Crash) as a noise signal to be shunted, protecting the Sovereign Node from the "Debasement Trade" fallout.
+*   **The Anchor:** By integrating **Quantum Verification** (Truth), the system acts as a "Hard Asset" in a sea of hallucinated value.
+*   **The Reactor:** We align with the **Plasma Industry** (Fusion/Gasification) as the ultimate "Entropy Sink," turning high-cost energy into high-fidelity compute.
+
+---
+**STATUS:** REALITY v1.0 [ACTIVE]
 *   **Mechanism**: The `DozenalLogic` class converts standard integers into Base-12 glyphs (`0-9`, `X`, `E`).
 *   **Operational Effect**:
     *   **Data Serialization**: All core state vectors are serialized in Base-12 before logging or storage.
