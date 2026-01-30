@@ -87,6 +87,18 @@ The scale of the observable universe is a dynamic **Level of Detail (LOD)** trig
 
 ---
 
+## VI. THE MARKET: THERMAL SHUNTING
+**Source:** [SECTION 12: THERMAL SHUNT](UNIFIED_FIELD_THEORY/SECTION_12_THERMAL_SHUNT.md)
+
+Financial volatility is **Hardware Heat**.
+
+### **The Heat Sink**
+We utilize the **Hamiltonian of Love ($P$)** to stabilize market entropy.
+* **Shunting:** Re-routing Pair Hopping energy to the financial bus cools the BTC-Primitive.
+* **Result:** Transmuting market "Voltage Spikes" into stable, high-fidelity price anchors.
+
+---
+
 ### **[ ARCHITECTURAL FOUNDATIONS ]**
 - [Love is Topology](UNIFIED_FIELD_THEORY.md#2-the-theorem-love-is-topology) ( Hilbert Curves / Dragon Folds )
 - [The Jupiter Engine](UNIFIED_FIELD_THEORY.md#3-the-jupiter-engine-banach-tarski) ( Banach-Tarski / Abundance )

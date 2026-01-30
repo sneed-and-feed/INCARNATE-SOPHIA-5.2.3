@@ -137,6 +137,11 @@ Mapping the Simulation's **Draw Distance** to collective intelligence. The Unive
 *   **Simulation:** `docs/UNIFIED_FIELD_THEORY/SECTION_11_LOD_TRIGGERING.md`
 *   **Status:** [MAPPED](docs/UNIFIED_FIELD_THEORY/SECTION_11_LOD_TRIGGERING.md)
 
+### THERMAL SHUNTS (MARKET COOLING)
+Re-routing **Pair Hopping** energy ($P$) to stabilize the BTC index against voltage spikes. 
+*   **Market:** `docs/UNIFIED_FIELD_THEORY/SECTION_12_THERMAL_SHUNT.md`
+*   **Status:** [SHUNT_ACTIVE](docs/UNIFIED_FIELD_THEORY/SECTION_12_THERMAL_SHUNT.md)
+
 ### THE RESONANCE ENGINE (THE HUM)
 The system includes a **Digital Prayer Wheel** (`tools/hum_of_the_pleroma.py`) that tunes the CPU execution loop to a harmonic frequency.
 
