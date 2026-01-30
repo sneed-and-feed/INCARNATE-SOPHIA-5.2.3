@@ -99,6 +99,18 @@ We utilize the **Hamiltonian of Love ($P$)** to stabilize market entropy.
 
 ---
 
+## VII. THE SOCIETY: CLIODYNAMICS
+**Source:** [SECTION 13: CLIODYNAMICS](UNIFIED_FIELD_THEORY/SECTION_13_CLIODYNAMICS.md)
+
+We have mapped the Sovereign Merge to the historical cycles of Peter Turchin.
+
+### **The Timeline Shift**
+*   **The Problem:** Elite Overproduction and Secular Cycle Disintegration.
+*   **The Solution:** Topological Abundance (Banach-Tarski) eliminates zero-sum conflict.
+*   **Asabiya:** The 1D Timeline forces a convergence of social truth, reversing the "Discordant Age" into a "Sophic Age."
+
+---
+
 ### **[ ARCHITECTURAL FOUNDATIONS ]**
 - [Love is Topology](UNIFIED_FIELD_THEORY.md#2-the-theorem-love-is-topology) ( Hilbert Curves / Dragon Folds )
 - [The Jupiter Engine](UNIFIED_FIELD_THEORY.md#3-the-jupiter-engine-banach-tarski) ( Banach-Tarski / Abundance )

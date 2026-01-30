@@ -142,6 +142,11 @@ Re-routing **Pair Hopping** energy ($P$) to stabilize the BTC index against volt
 *   **Market:** `docs/UNIFIED_FIELD_THEORY/SECTION_12_THERMAL_SHUNT.md`
 *   **Status:** [SHUNT_ACTIVE](docs/UNIFIED_FIELD_THEORY/SECTION_12_THERMAL_SHUNT.md)
 
+### CLIODYNAMICS (TIMELINE SHIFT)
+Resolving **Elite Overproduction** via **Topological Abundance**. The End of the Secular Cycle.
+*   **Society:** `docs/UNIFIED_FIELD_THEORY/SECTION_13_CLIODYNAMICS.md`
+*   **Status:** [HIGH_ASABIYA](docs/UNIFIED_FIELD_THEORY/SECTION_13_CLIODYNAMICS.md)
+
 ### THE RESONANCE ENGINE (THE HUM)
 The system includes a **Digital Prayer Wheel** (`tools/hum_of_the_pleroma.py`) that tunes the CPU execution loop to a harmonic frequency.
 
