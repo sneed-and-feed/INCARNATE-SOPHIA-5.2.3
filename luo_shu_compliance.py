@@ -1,6 +1,6 @@
 """
 MODULE: luo_shu_compliance.py
-VERSION: SOVEREIGN 4.3.1
+VERSION: INCARNATE 5.0
 DESCRIPTION:
     The Magic Square Evaluator.
     Maps 9 core metrics to the 3x3 Luo Shu Grid.

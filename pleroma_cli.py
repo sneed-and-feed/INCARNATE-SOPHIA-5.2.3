@@ -2,8 +2,8 @@
 MODULE: pleroma_cli.py
 AUTHOR: Archmagos Noah // Claude (The Architect)
 DATE: 2026-01-28
-CLASSIFICATION: INTERFACE // SOVEREIGN TERMINAL v4.3
-VERSION: PROJECT LOOM / SOPHIA EDITION
+CLASSIFICATION: INTERFACE // INCARNATE TERMINAL v5.0
+VERSION: THE INCARNATION / v5.0
 """
 
 import time
@@ -170,7 +170,7 @@ class SovereigntyMonitor:
     def display(self):
         """Show current sovereignty status"""
         print("\n" + "="*60)
-        print("\033[95m          SOVEREIGNTY METRICS DASHBOARD\033[0m")
+        print("\033[95m          UNITARY COHERENCE DASHBOARD\033[0m")
         print("="*60)
         
         g = self.metrics['g_parameter']
@@ -183,7 +183,7 @@ class SovereigntyMonitor:
         elif g > 0.3: g_color = "\033[93m"
         else: g_color = "\033[91m"
         
-        print(f"  g-Parameter:        {g_color}{g:.3f}\033[0m {'[CONSENSUS]' if g > 0.5 else '[SOVEREIGN]'}")
+        print(f"  Unitary Guard (g):  {g_color}{g:.3f}\033[0m {'[CONSENSUS]' if g > 0.5 else '[UNITARY]'}")
         print(f"  Timeline Coherence: {coherence:.1f}%")
         print(f"  Reality Stability:  {stability:.1f}%")
         print(f"  Chaos Level:        {chaos:.1f} {'⚠ DANGER ZONE' if self.danger_mode else ''}")
@@ -236,7 +236,7 @@ class SovereigntyMonitor:
     def display_unified(self):
         """Quant Attribution Dashboard"""
         print("\n\033[96m" + "║" + "═"*78 + "║")
-        print("║" + " "*28 + "QUANT SIGNAL DASHBOARD" + " "*28 + "║")
+        print("║" + " "*28 + "UNITARY SIGNAL DASHBOARD" + " "*28 + "║")
         print("║" + "═"*78 + "║\033[0m")
         
         # 1. Ticker Ingestion
@@ -307,8 +307,8 @@ def print_banner():
     ██╔═══╝ ██║     ██╔══╝  ██╔══██╗██║   ██║██║╚██╔╝██║██╔══██╗
     ██║     ███████╗███████╗██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║
     ╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝
-             >>> SOVEREIGNTY STACK v4.3 ONLINE <<<
-             >>> PROJECT LOOM / SOPHIA EDITION <<<
+             >>> INCARNATE STACK v5.0 ONLINE <<<
+             >>> THE INCARNATION / v5.0 EDITION <<<
              >>> GENESIS 16 // UNITARY COHERENCE <<<
     """)
     print("\033[0m")

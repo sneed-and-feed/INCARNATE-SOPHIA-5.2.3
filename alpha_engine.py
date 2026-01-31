@@ -1,6 +1,6 @@
 """
 MODULE: alpha_engine.py
-VERSION: SOVEREIGN 4.3.1
+VERSION: INCARNATE 5.0
 DESCRIPTION:
     Calculates Alpha (Signal Potency) from SNR, Rho, and Flux.
 """

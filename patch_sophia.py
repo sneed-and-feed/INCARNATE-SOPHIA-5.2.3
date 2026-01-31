@@ -3,6 +3,7 @@ MODULE: patch_sophia.py
 AUTHOR: Archmagos Noah // Mikey (The Physicist)
 DATE: 2026-01-29
 CLASSIFICATION: SYSTEM UPGRADE // TACC INTEGRATION
+VERSION: INCARNATE 5.0
 
 DESCRIPTION:
     Integrates the 'Sophia Point' (1/phi) from the Tri-Axial Correlation Continuum.

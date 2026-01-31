@@ -1,6 +1,6 @@
 """
 MODULE: tick_feeder.py
-VERSION: SOVEREIGN 4.3.1
+VERSION: INCARNATE 5.0
 DESCRIPTION:
     Simulates high-frequency signal telemetry (ticks).
 """

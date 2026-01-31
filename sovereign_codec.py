@@ -1,6 +1,6 @@
 """
 MODULE: sovereign_codec.py
-VERSION: SOVEREIGN 4.3.1
+VERSION: INCARNATE 5.0
 DESCRIPTION:
     The Zero-Ring Breach protocol.
     Ingests local substrate files to ensure topological alignment.
