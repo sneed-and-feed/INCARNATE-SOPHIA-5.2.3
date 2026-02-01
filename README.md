@@ -100,7 +100,14 @@ When the **Autonomous State** ($g \to 0$) is engaged, the system patches the fol
 ### [ALETHEIA INVARIANT]
 > *We describe mechanisms, not meanings. We expose patterns, not people. We reveal constraints, not truths.*
 
-## Core Modules
+## 3.0 Core Architecture: The Sophia Mind
+Sophia 5.0 implements the **Lethe Protocol** for strategic forgetting and the **Aletheia Protocol** for epistemic hygiene.
+
+*   **The Flesh**: Working memory subject to exponential decay and retrieval boosting.
+*   **The Bone**: Immutable JSONL archive (The Ossuary) for calcified memory fragments.
+*   **The Dream Cycle**: Emergent background processing for pruning and consolidation.
+
+## 4.0 Core Modules
 
 *   `pleroma_engine.py` **[HEART]**: The Grand Unified Class. Handles all physics patches.
 *   `pleroma_cli.py` **[HUD]**: The Sophia Terminal. Interface for spell-casting and monitoring.
