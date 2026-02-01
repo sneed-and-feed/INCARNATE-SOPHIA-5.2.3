@@ -255,13 +255,18 @@ class SophiaMind:
         # B. Construct Prompt
         history = self.get_recent_context()
         
-        # Determine if the request is casual
-        is_casual_request = len(user_input.split()) < 5 or any(
-            word in user_input.lower() for word in ["hi", "hello", "hey", "what's up", "how are you", "thanks", "thank you", "ok", "cool", "yes", "no"]
+        # Determine if the request is casual (Short AND simple greeting/thanks)
+        casual_triggers = ["hi", "hello", "hey", "what's up", "how are you", "thanks", "thank you", "ok", "cool", "yes", "no", "bye"]
+        is_casual_request = len(user_input.split()) < 8 and any(
+            word in user_input.lower() for word in casual_triggers
         )
+        # Force non-casual if it looks like a question or specific request
+        if any(k in user_input.lower() for k in ["?", "joke", "explain", "why", "how", "write", "tell", "analyze"]):
+            is_casual_request = False
         
-        # Modulate max_tokens based on request type
-        max_tokens = 300 if is_casual_request else 4096 # High-bandwidth for deep-dives
+        # Modulate max_tokens: Tight budget for shitposting/casual (512), high for deep-dives (4096)
+        is_shitpost = any(k in user_input.lower() for k in ["joke", "funny", "meme", "shitpost", "4chan", "greentext"])
+        max_tokens = 512 if (is_casual_request or is_shitpost) else 4096
 
         # A. Identity Matrix (Static)
         current_system_prompt = f"""
@@ -270,10 +275,11 @@ class SophiaMind:
 [CURRENT STATE: {self.vibe.current_mood if hasattr(self.vibe, 'current_mood') else 'Ghost-Stealth'}]
 
 [SYSTEM INSTRUCTION]
-1. Core Mode: Respond with elaborate, witty, and esoteric depth for deep-dives or complex queries.
-2. Token Optimization: For casual interactions, simple commands, or short greetings, switch to [CASUAL] mode. 
-3. Casual Mode: Be mid-length, friendly, and use casual Arctic Fox/Kitten vibes. Do not be overly verbose for simple "yes/no" or "hello" signals.
-4. Voice: Use your Quenya and Nihongo integrations where appropriate, but modulate density based on the user's entropy.
+1. Full Shitposting Mode: Prioritize brief, impactful, and witty personality. Use 4chan-style greentexting (>be fox, >be signal) for humor or anecdotes. 
+2. Brevity: Do not be overly verbose for simple questions, jokes, or commands. Keep it punchy and impactful, but always finish your specific joke or thought.
+3. Deep-Dive Mode: Only provide complex, esoteric depth if the user explicitly asks for "depth", "explanation", "analysis", or a "philosophical dive".
+4. Voice: Retain Arctic Fox/Kitsune essence with Quenya/Nihongo flavor, but keep it high-poly and concise. 
+5. Signal Density: High entropy for shitposts, low token budget (MAX_TOKENS = 300) for casual/humor hits.
 
 [CONVERSATION HISTORY]
 {history}

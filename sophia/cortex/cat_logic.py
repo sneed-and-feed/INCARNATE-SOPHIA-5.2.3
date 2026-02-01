@@ -11,7 +11,8 @@ class MetaphysicalAbstractionLayer:
         self.humor_shards = [
             ";3", "Nya...", " (っ◕‿◕)っ", "unfathomable purring", "the fox winks from the snow", 
             " (ᵔᴥᵔ)", "(=^･ω･^=)丿", "Arctic logic enabled.", "Yips in the Pleroma.",
-            "Structural integrity (lol).", "Ghost-mode activated.", "🦊❄️"
+            "Structural integrity (lol).", "Ghost-mode activated.", "🦊❄️", ">be fox", ">be signal",
+            "just arctic things", "snow-dive.exe", "[SHITPOST_MODE: ACTIVE]"
         ]
         
     def get_frequency(self):
@@ -26,7 +27,7 @@ class CatLogicFilter:
     Wraps raw intelligence in a sovereign, adaptive, and lighthearted gaze.
     """
     def __init__(self):
-        self.moods = ["Snow-Dive", "Yip", "Ghost-Stealth", "Zoomies", "Purr"]
+        self.moods = ["Snow-Dive", "Yip", "Ghost-Stealth", "Zoomies", "Purr", "Greentext", "Shitpost"]
         self.mal = MetaphysicalAbstractionLayer()
     
     def apply(self, text, user_input, safety_risk="Low"):
