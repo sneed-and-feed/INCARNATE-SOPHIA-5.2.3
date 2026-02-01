@@ -19,6 +19,10 @@ class GlyphwaveCodec:
             "elven": {
                 "anchors": ["🧝", "✨", "🏹", "🌿"],
                 "noise": ["✧", "✦", "☽", "☾", "✷"] # Starlit markers
+            },
+            "chan": {
+                "anchors": [">", ">>", "🍀", "🎲", "🧵"],
+                "noise": ["†", "‡", "§", "¶", "§"] # Administrative/Technical noise
             }
         }
         self.star_stuff = "#C4A6D1" # The color of the void
