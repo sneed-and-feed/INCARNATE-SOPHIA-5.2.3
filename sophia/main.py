@@ -454,6 +454,13 @@ Verdict: {cat}
             raw=raw_mode
         )
         
+        # [RESONANCE DAMPER] Fix for Class 6 "Infinite Loop" Anomaly
+        # If the model gets too excited (Phi-Boost > 1.5) and loops > 20 chars
+        import re
+        if len(raw_response) > 50:
+             # Collapse "IIIIIII..." to "IIIII..." (Max 10 reps)
+             raw_response = re.sub(r'(.)\1{10,}', r'\1\1\1\1\1...', raw_response)
+        
         # E. Filter & Metabolize
         final_response = self.cat_filter.apply(raw_response, user_input, safety_risk=risk)
 
