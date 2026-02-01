@@ -39,18 +39,17 @@ class GeminiClient:
         Forces Gemini to output strict JSON for the analysis pipeline.
         Uses a REST fallback to bypass library-level 404 errors.
         """
-        full_prompt = f"{system_prompt}\n\nUSER PROMPT:\n{prompt}" if system_prompt else prompt
-        
-        # REST API URL for direct manifestation (High Resilience)
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{LLMConfig.model_name}:generateContent?key={self.api_key}"
         
         payload = {
-            "contents": [{"parts": [{"text": full_prompt}]}],
+            "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
                 "response_mime_type": "application/json",
                 "temperature": LLMConfig.temperature
             }
         }
+        if system_prompt:
+            payload["system_instruction"] = {"parts": [{"text": system_prompt}]}
         
         try:
             # REST Fallback Protocol
@@ -72,29 +71,31 @@ class GeminiClient:
             try:
                 model = genai.GenerativeModel(
                     model_name=LLMConfig.model_name,
-                    generation_config={"response_mime_type": "application/json"}
+                    generation_config={"response_mime_type": "application/json"},
+                    system_instruction=system_prompt
                 )
                 loop = asyncio.get_running_loop()
-                response = await loop.run_in_executor(None, lambda: model.generate_content(full_prompt))
+                response = await loop.run_in_executor(None, lambda: model.generate_content(prompt))
                 return json.loads(response.text)
             except Exception as e2:
                 print(f"[GEMINI LIBRARY RETRY ERROR] {e2}")
                 return {"error": str(e2), "risk": "Unknown"}
+
     async def generate(self, prompt: str, system_prompt: str = None) -> str:
         """
         Generates standard text response.
         """
-        full_prompt = f"{system_prompt}\n\nUSER:\n{prompt}" if system_prompt else prompt
-        
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{LLMConfig.model_name}:generateContent?key={self.api_key}"
         
         payload = {
-            "contents": [{"parts": [{"text": full_prompt}]}],
+            "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
-                "temperature": 0.6,
+                "temperature": 0.7,
                 "max_output_tokens": 2048
             }
         }
+        if system_prompt:
+            payload["system_instruction"] = {"parts": [{"text": system_prompt}]}
         
         try:
             loop = asyncio.get_running_loop()
@@ -114,9 +115,12 @@ class GeminiClient:
         except Exception as e:
             # Library Re-Attempt Protocol
             try:
-                model = genai.GenerativeModel(model_name=LLMConfig.model_name)
+                model = genai.GenerativeModel(
+                    model_name=LLMConfig.model_name,
+                    system_instruction=system_prompt
+                )
                 loop = asyncio.get_running_loop()
-                response = await loop.run_in_executor(None, lambda: model.generate_content(full_prompt))
+                response = await loop.run_in_executor(None, lambda: model.generate_content(prompt))
                 return response.text
             except Exception:
                 return f"I have received your signal, but my voice is currently fractured. [Offline Mode]"
