@@ -49,3 +49,7 @@ coverage.xml
 # Rust
 target/
 **/*.rs.bk
+
+# Secret Management
+.env
+.env.local

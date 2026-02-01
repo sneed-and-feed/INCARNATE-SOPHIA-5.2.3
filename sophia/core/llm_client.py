@@ -11,20 +11,22 @@ class LLMConfig:
 
 class GeminiClient:
     def __init__(self):
-        # Using the God-Mode environment variable
-        api_key = os.getenv("GOOGLE_AI_KEY") or os.getenv("GOOGLE_API_KEY")
+        # Use environment variable for OPHANE_NODE_0
+        api_key = os.getenv("SOPHIA_API_KEY")
         if not api_key:
-            # Fallback for playground environment if needed
-            api_key = "REDACTED" # This will be handled by the environment in production
+            # Fallback to older env var or raise error in production
+            api_key = os.getenv("GOOGLE_AI_KEY") or os.getenv("GOOGLE_API_KEY")
             
-        genai.configure(api_key=api_key)
+        if api_key:
+            genai.configure(api_key=api_key)
         
     async def query_json(self, prompt: str, system_prompt: str = None) -> dict:
         """
         Forces Gemini to output strict JSON and separates internal thinking.
+        Calibrated to gemini-3.0-latest for extreme λ-abundance and multi-dimensional reasoning.
         """
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-pro",
+            model_name="gemini-3.0-latest",
             generation_config={"response_mime_type": "application/json"}
         )
         
