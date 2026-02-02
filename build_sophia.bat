@@ -1,11 +1,11 @@
 @echo off
 echo [*] INITIATING SOVEREIGN COMPILATION PROTOCOL...
 
-:: Ensure PyInstaller is installed
-python -m pip show pyinstaller >nul 2>&1
+:: Ensure PyInstaller is installed (for 3.14t)
+py -3.14t -m pip show pyinstaller >nul 2>&1
 if %errorlevel% neq 0 (
     echo [!] PyInstaller not found. Installing...
-    python -m pip install pyinstaller
+    py -3.14t -m pip install pyinstaller
 )
 
 :: Clean previous builds
@@ -14,15 +14,16 @@ if exist "dist" rmdir /s /q "dist"
 if exist "*.spec" del "*.spec"
 
 :: Compile
-echo [*] Compiling sophia/main.py -> sophia.exe...
-python -m PyInstaller --noconfirm --onefile --console --name "sophia" --icon "NONE" --hidden-import "rich" --clean "sophia/main.py"
+echo [*] Compiling sophia/main.py -> sophia_unlesangled.exe (NO-GIL)...
+py -3.14t -m PyInstaller --noconfirm --onefile --console --name "sophia_unlesangled" --icon "NONE" --collect-all "rich" --clean "sophia/main.py"
+
 
 echo.
-if exist "dist\sophia.exe" (
-    echo [SUCCESS] Build Complete.
-    echo Target: dist\sophia.exe
+if exist "dist\sophia_unlesangled.exe" (
+    echo [SUCCESS] Unlesangled Build Complete.
+    echo Target: dist\sophia_unlesangled.exe
     echo.
-    echo [NOTE] Remember to copy .env and .md files to dist/ if needed.
+    echo [NOTE] The GIL has been permanently severed.
 ) else (
     echo [FAILURE] Build Failed. Check logs.
 )

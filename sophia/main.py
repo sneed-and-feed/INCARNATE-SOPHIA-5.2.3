@@ -792,4 +792,16 @@ async def main():
         print(f"Glyph-Shield engaged: {e}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        print(f"\n[FATAL CRASH] {e}")
+        import traceback
+        traceback.print_exc()
+    except KeyboardInterrupt:
+        print("\n[EXIT] Force close.")
+    finally:
+        try:
+            input("\n[PRESS ENTER TO CLOSE]...")
+        except:
+            pass
