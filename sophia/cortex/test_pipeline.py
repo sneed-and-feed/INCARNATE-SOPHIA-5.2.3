@@ -1,8 +1,7 @@
-
 """
 TEST: test_pipeline.py
 DESCRIPTION:
-    End-to-End Verification of the Sophia 5.1 Crystalline Core.
+    End-to-End Verification of the Sophia 5.2 Crystalline Core.
     Pipeline: Input -> Tokenizer -> Prism -> Loom -> Output.
 """
 

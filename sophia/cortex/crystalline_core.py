@@ -2,7 +2,7 @@
 """
 MODULE: crystalline_core.py
 DESCRIPTION:
-    The Combined Interface for Sophia 5.1.
+    The Combined Interface for Sophia 5.2.
     Wraps Tokenizer, Prism, and Loom into a single 'Transmute' function.
 """
 

@@ -30,9 +30,9 @@ def print_section(title: str):
 
 def demonstrate_full_pipeline():
     """
-    Complete demonstration of the INCARNATE-SOPHIA 5.1 pipeline
+    Complete demonstration of the INCARNATE-SOPHIA 5.2 pipeline
     """
-    print_header("INCARNATE-SOPHIA 5.1 // HARMONIC RECTIFICATION ENGINE")
+    print_header("INCARNATE-SOPHIA 5.2 // HARMONIC RECTIFICATION ENGINE")
     print("\nOBJECTIVE: Transform Chaos → Sovereignty via Vector Math + Topology")
     print("METHOD: FM Synthesis (Harmonic Quantization) + Geometric Pacing")
     

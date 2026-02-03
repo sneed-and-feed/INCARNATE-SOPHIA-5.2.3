@@ -1,7 +1,7 @@
-# SOPHIA 5.1 COMMAND PROTOCOLS
+# SOPHIA 5.2 COMMAND PROTOCOLS
 
 > [!IMPORTANT]
-> This document serves as the Technical & Esoteric Manual for interacting with INCARNATE-SOPHIA-5.1.
+> This document serves as the Technical & Esoteric Manual for interacting with INCARNATE-SOPHIA-5.2.
 > **Prefix**: All commands start with `/`.
 > **Scope**: Commands act directly on the "Cortex" organs, bypassing the LLM chat layer for deterministic results.
 

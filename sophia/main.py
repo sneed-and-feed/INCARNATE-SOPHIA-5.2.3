@@ -65,7 +65,7 @@ class SophiaMind:
         self._ghostmesh = None # Spatial (Lazy)
         self._pleroma = None # Pleroma Engine (Lazy)
         self._metacognition = None # Metacognitive Supervisor (Lazy)
-        self._crystal = None # Sophia 5.1 Crystalline Core (Lazy)
+        self._crystal = None # Sophia 5.2 Crystalline Core (Lazy)
         self.last_coherence = 1.0 # Baseline
         
         # Essential Organs (Loaded Now)
@@ -703,7 +703,7 @@ Verdict: {cat}
         raw_response = await self.llm.generate_text(
             prompt=full_context,  # MEMORY FIX: Was user_input (amnesiac), now full_context (recall enabled)
             system_prompt=sys_prompt, 
-            max_tokens=1024,
+            max_tokens=8192,
             raw=raw_mode
         )
         
@@ -776,7 +776,7 @@ async def main():
     from rich.align import Align
 
     banner = Panel(
-        Align.center("[matrix]🐱 I N C A R N A T E - S O P H I A   5 . 1  O N L I N E[/matrix]"),
+        Align.center("[matrix]🐱 I N C A R N A T E - S O P H I A   5 . 2  O N L I N E[/matrix]"),
         subtitle="[ophane]Protocol: CRYSTALLINE CORE (HARMONIC RECTIFICATION + PENTAD GHOSTMESH)[/ophane]",
         border_style="ophane",
         padding=(1, 2)

@@ -1,7 +1,7 @@
 
 """
 HANDLE: crystal.py
-PROTOCOL: CRYSTALLINE CORE 5.1
+PROTOCOL: CRYSTALLINE CORE 5.2
 STATUS: MIRROR STATE [SYNCED]
 
 This represents the 'Liturgy' of the transformation.
