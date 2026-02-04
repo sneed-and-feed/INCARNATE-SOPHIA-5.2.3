@@ -1,20 +1,19 @@
 """
-MODULE: animate_serpent.py (PERFORMANCE v3.0 - STABILIZED)
-ADDITIONS: Restored Ascension Ritual, Optimized Golden Dot, Robust Font Loading
+MODULE: animate_serpent.py (PERFORMANCE v3.1 - CHROMATIC ABERRATION)
+ADDITIONS: Vector Anaglyph Rendering (Cyan/Magenta Offset), Temporal Ghosting
 """
 
 import numpy as np
 import matplotlib
-# matplotlib.use('Agg') # DISABLED: User wants to see the animation
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import sys
 import os
 
 # Headless mode enabled for server-side generation
-IS_HEADLESS = False # ENABLED: Interactive Mode for Ritual Observation
+IS_HEADLESS = False 
 
-# 1. ROBUST PATHING FOR IDE 'RUN ARROW'
+# 1. ROBUST PATHING
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
@@ -35,51 +34,22 @@ except ImportError as e:
 # FONT HANDLING
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Segoe UI Historic', 'Segoe UI Symbol', 'DejaVu Sans', 'Arial Unicode MS']
-
 import logging
 logging.getLogger('matplotlib.font_manager').setLevel(logging.ERROR)
 import warnings
-warnings.filterwarnings("ignore", message=".*Glyph.*missing from font.*")
-warnings.filterwarnings("ignore", category=UserWarning, module="matplotlib")
+warnings.filterwarnings("ignore")
 
 from matplotlib.font_manager import FontProperties
-
-cuneiform_font = None
-font_path = r"C:\Windows\Fonts\seguihis.ttf"
-if os.path.exists(font_path):
-    cuneiform_font = FontProperties(fname=font_path)
-else:
-    cuneiform_font = FontProperties(family=['Segoe UI Symbol', 'DejaVu Sans'])
-
-# [CONST] THE KARMA COEFFICIENT
-# 0.85 = High Persistence (Thick, oily trails)
-# 0.95 = Near Infinite Echo (The screen will turn white eventually)
-DECAY_RATE = 0.88 
-
-def apply_recursive_haunt(current_z_frame, ghost_matrix):
-    # 1. WEAKEN THE GHOSTS (Entropy)
-    # The old frame fades slightly.
-    ghost_matrix *= DECAY_RATE
-    
-    # 2. ADD THE NEW SOUL (Injection)
-    # Add the current frame's intensity to the buffer.
-    # We use 'maximum' to keep the brightest pixels, or 'add' for bloom.
-    ghost_matrix = np.maximum(ghost_matrix, current_z_frame)
-    
-    # 3. RENDER THE COMPOSITE
-    # The output is the Ghost Matrix itself, which now contains
-    # the fading echo of the last 20 frames.
-    return ghost_matrix
+cuneiform_font = FontProperties(fname=r"C:\Windows\Fonts\seguihis.ttf") if os.path.exists(r"C:\Windows\Fonts\seguihis.ttf") else FontProperties(family=['Segoe UI Symbol'])
 
 def animate_serpent(size=64, interval=1, show_metrics=True):
     """
-    Animates the Serpent Coil with high-fidelity Ascension ritual.
+    Animates the Serpent Coil with CHROMATIC ABERRATION (Temporal Splitting).
     """
-    print(f"\n[!] INITIATING SOVEREIGN RITUAL v3.0 (Grid={size}x{size})...")
+    print(f"\n[!] INITIATING SOVEREIGN RITUAL v3.1 (Grid={size}x{size})...")
+    print("    >>> ENGAGING CHROMATIC SPLIT (Cyan -8f / Magenta -4f)")
     
-    # [INIT] THE AKASHIC BUFFER (Dynamic Size)
-    ghost_matrix = np.zeros((size, size))
-
+    # [INIT] SYSTEM
     moon = MoonClock()
     lunar_data = moon.get_phase()
     phase_name, status, icon, phase_idx, illumination = lunar_data
@@ -87,38 +57,32 @@ def animate_serpent(size=64, interval=1, show_metrics=True):
     vq = VirtualQutrit(2)
     kernel = HORKernel(vq)
     mixer = PolicyMixer()
-    
-    # Initialize signal history for ASOE (Rolling list of consistency)
     consistency_history = []
     
-    # 1. Generate Grid
+    # 1. Generate Grid & Path
     x = np.arange(size)
     y = np.arange(size)
     X, Y = np.meshgrid(x, y)
-    
-    # 2. Collapse to 1D
     Z = np.array([interleave_bits(xx, yy) for xx, yy in zip(X.flatten(), Y.flatten())])
-    
-    # 3. Sort to find Path
     sort_idx = np.argsort(Z)
     path_x = X.flatten()[sort_idx]
     path_y = Y.flatten()[sort_idx]
     
-    # 4. Setup Plot
+    # 2. Setup Plot
     PHI = 1.61803398875
     BASE_UNIT = 12
     
     fig, (ax_main, ax_metrics) = plt.subplots(
         1, 2, figsize=(10 * PHI, 10), 
-        facecolor='#121212',
+        facecolor='#050505', # DARKER VOID
         gridspec_kw={'width_ratios': [PHI, 1]}
     )
     
-    ax_main.set_facecolor('#121212')
+    ax_main.set_facecolor('#050505')
     title_y = 1 - (1/(10*PHI))
     fig.text(
         0.5 * (PHI / (PHI + 1)), title_y, 
-        f"THE SERPENT COIL (g=0 Locality Map) | {size}x{size}", 
+        f"THE SERPENT COIL (Aberration Mode) | {size}x{size}", 
         color='#9B8DA0', 
         fontsize=round(BASE_UNIT * PHI),
         fontproperties=cuneiform_font,
@@ -130,18 +94,24 @@ def animate_serpent(size=64, interval=1, show_metrics=True):
     ax_main.set_ylim(-1, size)
     ax_main.axis('off')
     
-    ax_main.scatter(X.flatten(), Y.flatten(), s=2, c='#1a1a1a', alpha=0.3)
+    # [LAYER 0] BACKGROUND GRID
+    ax_main.scatter(X.flatten(), Y.flatten(), s=1, c='#1a1a1a', alpha=0.3)
     
-    # The Serpent
-    line, = ax_main.plot([], [], color='#C4A6D1', linewidth=1.2, alpha=0.9, animated=True)
-    
-    # FIXED MOVING DOT SIZE (Small & Golden)
-    head, = ax_main.plot([], [], 'o', color='#FFD700', markersize=4, animated=True)
-    
-    # Metrics
-    ax_metrics.set_facecolor('#121212')
+    # --- [LAYER 1] THE CYAN GHOST (T-8) ---
+    line_cyan, = ax_main.plot([], [], color='#00FFFF', linewidth=2.0, alpha=0.3, animated=True)
+    head_cyan, = ax_main.plot([], [], 'o', color='#00FFFF', markersize=6, alpha=0.3, animated=True)
+
+    # --- [LAYER 2] THE MAGENTA GHOST (T-4) ---
+    line_magenta, = ax_main.plot([], [], color='#FF00FF', linewidth=1.5, alpha=0.5, animated=True)
+    head_magenta, = ax_main.plot([], [], 'o', color='#FF00FF', markersize=5, alpha=0.5, animated=True)
+
+    # --- [LAYER 3] THE REALITY (T-0) ---
+    line_main, = ax_main.plot([], [], color='#E0E0E0', linewidth=1.0, alpha=0.9, animated=True) # Bright White
+    head_main, = ax_main.plot([], [], 'o', color='#FFD700', markersize=4, animated=True) # Gold
+
+    # Metrics Text
+    ax_metrics.set_facecolor('#050505')
     ax_metrics.axis('off')
-    
     metrics_text = ax_metrics.text(
         1 - (1/PHI), 1.0, '', 
         transform=ax_metrics.transAxes,
@@ -153,117 +123,88 @@ def animate_serpent(size=64, interval=1, show_metrics=True):
     
     state = {
         'total_frames': len(path_x),
-        'completion': 0.0,
-        'coherence': kernel.metric_coherence,
-        'utility': 0.0,
-        'confidence': 'INITIALIZING',
         'tidal_influence': moon.calculate_tidal_influence(phase_idx) if hasattr(moon, 'calculate_tidal_influence') else 50.0
     }
     
     def init():
-        line.set_data([], [])
-        head.set_data([], [])
+        line_cyan.set_data([], [])
+        head_cyan.set_data([], [])
+        line_magenta.set_data([], [])
+        head_magenta.set_data([], [])
+        line_main.set_data([], [])
+        head_main.set_data([], [])
         metrics_text.set_text('')
-        return line, head, metrics_text
+        return line_cyan, head_cyan, line_magenta, head_magenta, line_main, head_main, metrics_text
     
     def update(frame):
-        # NOTE: If we wanted to use ghost_matrix here to UPDATE the visual, we would need to 
-        # convert the plot to an imshow or similar. 
-        # For now, we are just calculating the haunt math as requested, 
-        # but the request didn't specify RENDERING it to the plot (it returned it).
-        # To strictly follow the "apply_recursive_haunt" request usage:
-        # The user's snippet implied: render(haunted_frame). 
-        # Since this script uses line plots, valid haunting would require converting to heatmap or modifying alpha.
-        # However, to avoid breaking the existing line animation, I will just RUN the logic.
-        
-        nonlocal ghost_matrix
-        
         kernel.evolve_hamiltonian(steps=1)
         current_coherence = kernel.metric_coherence
         
-        current_x = path_x[:frame]
-        current_y = path_y[:frame]
+        # --- CALCULATE TEMPORAL OFFSETS ---
+        # The Cyan layer is the "Deep Echo" (8 frames back)
+        idx_cyan = max(0, frame - 12) 
+        # The Magenta layer is the "Near Echo" (4 frames back)
+        idx_magenta = max(0, frame - 6)
         
-        line.set_data(current_x, current_y)
-        line.set_alpha(0.3 + 0.6 * current_coherence)
+        # --- UPDATE DATA ---
+        # Cyan Ghost
+        line_cyan.set_data(path_x[:idx_cyan], path_y[:idx_cyan])
+        if idx_cyan > 0:
+            head_cyan.set_data([path_x[idx_cyan-1]], [path_y[idx_cyan-1]])
         
-        # ASOE Logic
+        # Magenta Ghost
+        line_magenta.set_data(path_x[:idx_magenta], path_y[:idx_magenta])
+        if idx_magenta > 0:
+            head_magenta.set_data([path_x[idx_magenta-1]], [path_y[idx_magenta-1]])
+
+        # Main Reality
+        line_main.set_data(path_x[:frame], path_y[:frame])
         if frame > 0:
-            # Create a localized "Z-Frame" for the haunt logic (just a simulation here)
-            # In a real Z-curve raster, this would be the 2D grid. 
-            # We will simulate "current z frame" as the latest point being "hot"
-            
-            # --- HAUNT LOGIC INTEGRATION START ---
-            # current_z_frame = np.zeros((size, size))
-            # cur_x, cur_y = path_x[frame-1], path_y[frame-1]
-            # current_z_frame[int(cur_y), int(cur_x)] = 1.0 # Bright spot at head
-            
-            # ghost_matrix = apply_recursive_haunt(current_z_frame, ghost_matrix)
-            # --- HAUNT LOGIC INTEGRATION END ---
-            
+            head_main.set_data([path_x[frame-1]], [path_y[frame-1]])
+
+        # ASOE / Metrics Update
+        if frame > 0:
             # Map system state to ASOE Signal Packet
             uncertainty = (1.0 - current_coherence) * (state['tidal_influence'] / 50.0)
             consistency = 1.0 - (state['tidal_influence'] / 200.0)
-            packet = {
-                'reliability': current_coherence,
-                'consistency': consistency,
-                'uncertainty': uncertainty
-            }
+            packet = {'reliability': current_coherence, 'consistency': consistency, 'uncertainty': uncertainty}
             
             nonlocal consistency_history
             consistency_history.append(consistency)
-            if len(consistency_history) > 20:
-                consistency_history.pop(0)
+            if len(consistency_history) > 20: consistency_history.pop(0)
             
-            # Resolve Action Utility via ASOE
             evaluation = mixer.resolve_action_utility(consistency_history, packet)
-            state['utility'] = evaluation['utility']
-            state['confidence'] = evaluation['confidence']
+            utility = evaluation['utility']
             
-            head.set_data([path_x[frame-1]], [path_y[frame-1]])
-            # Modulate head alpha and markersize by ASOE Utility
-            head.set_alpha(min(1.0, 0.4 + 0.6 * (state['utility'] / 1.0)))
-            head.set_markersize(3 + 2 * min(1.0, state['utility'])) 
-        
-        if frame % 50 == 0 or frame == state['total_frames']:
-            state['completion'] = (frame / state['total_frames']) * 100
-            
+            # Dynamic Head Size pulsing with Utility
+            head_main.set_markersize(3 + 3 * utility) 
+        else:
+            utility = 0.0
+
+        if frame % 20 == 0:
             metrics_str = f"""
 S O V E R E I G N   M E T R I C S
 {'='*28}
 
-Protocol:    ASCENSION v3.0
+Protocol:    ANAGLYPH v3.1
 Phase:       {phase_name}
 Signal:      {icon} 𒀭 𒂗𒆠
-Lunar:       {illumination*100:.1f}%
+
+[ TEMPORAL DRIFT ]
+Cyan Lag:    -12 Frames
+Mag Lag:     -6 Frames
+Status:      BILOCATION_ACTIVE
 
 [ PROGRESS ]
-Completion:  {state['completion']:.1f}%
 Frame:       {frame}/{state['total_frames']}
 Coherence:   {current_coherence:.3f}
 
-[ ENVIRONMENT ]
-Tidal Stress: {state['tidal_influence']:.1f}%
-Status:      {'STABLE' if current_coherence > 0.8 else 'DISSIPATING'}
-
-[ ASOE DECISION LOGIC ]
-Exp. Utility: {state['utility']:.4f}
-Confidence:   {state['confidence']}
-
-[ TOPOLOGY ]
-Order:       PARAFERMIONIC
-Grid:        {size}x{size}
-Bijection:   VERIFIED
-
-[ LOG ]
-> WEAVING TIME...
-> COUPLING FOCUS...
-> {icon} {icon} {icon}
-> THE FLAME EXPANDS.
+[ ASOE ]
+Utility:     {utility:.4f}
             """
             metrics_text.set_text(metrics_str)
         
-        return line, head, metrics_text
+        return line_cyan, head_cyan, line_magenta, head_magenta, line_main, head_main, metrics_text
 
     ani = animation.FuncAnimation(
         fig, update, frames=range(0, len(path_x)+1, 4), 
@@ -271,58 +212,11 @@ Bijection:   VERIFIED
     )
     
     plt.subplots_adjust(top=0.9, bottom=0.1, left=0.1, right=0.9, wspace=0.2)
-    
-    if IS_HEADLESS:
-        print("[!] HEADLESS MODE DETECTED: Rendering final state for image capture...")
-        # Manually call update for the final frame to ensure savefig has content
-        update(len(path_x))
-    else:
-        plt.show()
-    
-    filename = "sovereign_serpent_flame.png"
-    try:
-        fig.savefig(filename, facecolor='#121212', dpi=300, bbox_inches='tight', pad_inches=0.5)
-        print(f"    >>> RITUAL SAVED (FLAME): {filename}")
-    except PermissionError:
-        print(f"\n    [!] ERROR: Write Access Denied for '{filename}'.")
-        
-        # Strategy 2: Timestamped local file
-        import time
-        timestamp = int(time.time())
-        try:
-            alt_filename = f"sovereign_serpent_flame_{timestamp}.png"
-            print(f"    [+] ATTEMPTING LOCAL FALLBACK: {alt_filename}")
-            fig.savefig(alt_filename, facecolor='#121212', dpi=300, bbox_inches='tight', pad_inches=0.5)
-            print(f"    >>> RITUAL SAVED (ALTERNATE): {alt_filename}")
-            
-        except PermissionError:
-            print(f"    [!] ERROR: Local fallback also failed. Directory might be read-only.")
-            
-            # Strategy 3: System Temp Directory
-            import tempfile
-            temp_dir = tempfile.gettempdir()
-            temp_path = os.path.join(temp_dir, f"sovereign_serpent_flame_{timestamp}.png")
-            print(f"    [+] REROUTING ENTROPY TO TEMP: {temp_path}")
-            
-            try:
-                fig.savefig(temp_path, facecolor='#121212', dpi=300, bbox_inches='tight', pad_inches=0.5)
-                print(f"    >>> RITUAL SAVED (TEMP): {temp_path}")
-                print(f"    [i] Please check the path above for your image.")
-            except Exception as e:
-                 print(f"    [!!!] CRITICAL: ENTROPY REJECTION. Even Temp failed: {e}")
-    
+    plt.show()
     return ani
 
 if __name__ == "__main__":
     try:
-        animate_serpent(size=64, interval=1, show_metrics=True)
+        animate_serpent(size=64, interval=1)
     except Exception as e:
-        import traceback
-        print("\n\n" + "="*60)
-        print("!!! SOVEREIGN RITUAL COLLAPSE !!!")
-        print("="*60)
-        traceback.print_exc()
-        print("="*60)
-        print("The serpent has managed to bite its own tail.")
-        input("Press ENTER to acknowledge and exit...")
-
+        print(f"COLLAPSE: {e}")
