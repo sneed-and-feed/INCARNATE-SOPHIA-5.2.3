@@ -85,8 +85,15 @@ def main():
         
         # NOTE: In a real bootloader, we would import and run sophia.main here.
         # For now, we simulate the handoff.
-        # import sophia.main
-        # sophia.main.main()
+        try:
+             import asyncio
+             import sophia.main
+             print("[*] HANDOFF INITIATED. LOADING CORTEX...")
+             asyncio.run(sophia.main.main())
+        except ImportError:
+             print("[!] CRITICAL: Sophia Module Not Found.")
+        except Exception as e:
+             print(f"[!] SYSTEM CRASH: {e}")
     else:
         print("[!] INTEGRATION ERROR.")
 

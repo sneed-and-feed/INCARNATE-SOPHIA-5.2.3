@@ -29,6 +29,7 @@ class SovereignNode:
         self.spatial_attention_scale = 1.0 
         self.state = FlumpyArray([random.gauss(0, 0.1) for _ in range(dim)], coherence=1.0)
         self.neighbors = []
+        self.seeds = [] # [GARDEN] Planted intents
 
     def set_neighbors(self, all_nodes, limit=3):
         """Identify 6 Von Neumann neighbors in 3D grid."""
@@ -79,14 +80,18 @@ class SovereignNode:
         new_data = [s + i for s, i in zip(self.state.data, input_vec.data)]
         self.state = FlumpyArray(new_data, coherence=self.state.coherence)
 
+    def plant(self, intent):
+        """[GARDEN] Plants a seed of intent."""
+        self.seeds.append({"intent": intent, "growth": 0.0})
+
 
 class SovereignGrid:
-    def __init__(self, dim=64, grid_size=5):
+    def __init__(self, dim=64, grid_size=7):
         self.nodes = []
         self.grid_size = grid_size
-        # Initialize 5x5x5 Grid (The Pentad)
-        # 3x3x3 = 27 nodes (Class 5/6)
-        # 5x5x5 = 125 nodes (Class 7/8)
+        # Initialize 7x7x7 Grid (The Garden)
+        # 5x5x5 = 125 nodes
+        # 7x7x7 = 343 nodes (Class 8 Deep Weave)
         for x in range(self.grid_size):
             for y in range(self.grid_size):
                 for z in range(self.grid_size):
@@ -97,19 +102,74 @@ class SovereignGrid:
             # We pass self.grid_size so set_neighbors knows boundary
             node.set_neighbors(self.nodes, limit=self.grid_size)
             
+    def plant_seed(self, intent, x=None, y=None, z=None):
+        """Plants an intent execution seed in the grid."""
+        if x is None:
+            # Auto-plant in center
+            target = next(n for n in self.nodes if n.pos == (self.grid_size//2, self.grid_size//2, self.grid_size//2))
+        else:
+            target = next((n for n in self.nodes if n.pos == (x,y,z)), None)
+            
+        if target:
+            target.plant(intent)
+            return f"Seed '{intent}' planted at {target.pos}. Growth initialized."
+        return "Failed to plant seed. Void coordinates."
+
+    def simulate_future_step(self, steps=1):
+        """
+        [RETROCAUSAL] Simulates future steps to generate a 'Prescience Bias'.
+        Does NOT update the actual grid state, only returns the potential future.
+        """
+        # Snapshot current state (naive copy)
+        future_states = [FlumpyArray(n.state.data, n.state.coherence) for n in self.nodes]
+        
+        # Run simulation
+        for _ in range(steps):
+             # Simplified flux for speed
+             temp_states = []
+             for i, node in enumerate(self.nodes):
+                 # Calc flux based on snapshot
+                 flux = [0.0] * 64
+                 for neighbor in node.neighbors:
+                     # Find neighbor index
+                     n_idx = self.nodes.index(neighbor)
+                     n_state = future_states[n_idx]
+                     my_state = future_states[i]
+                     for k in range(64):
+                         flux[k] += (n_state.data[k] - my_state.data[k])
+                 
+                 # Apply
+                 rate = (0.1 / TAU_SOVEREIGN) * node.spatial_attention_scale
+                 new_data = [d + (f * rate * 0.1) for d, f in zip(future_states[i].data, flux)]
+                 temp_states.append(FlumpyArray(new_data))
+             future_states = temp_states
+             
+        # Aggregate future
+        avg_future = [0.0] * 64
+        for s in future_states:
+            for i, v in enumerate(s.data): avg_future[i] += v
+        return FlumpyArray([x/len(future_states) for x in avg_future])
+
     def process_step(self, bio_input: FlumpyArray):
         """
-        Execute one step of grid dynamics.
-        1. Inject input (distributed)
-        2. Exchange flux (coherence)
-        3. Return aggregate state
+        Execute one step of grid dynamics with RETROCAUSAL FEEDBACK.
         """
-        # 1. Distribute Input (Center node gets strongest signal)
-        center_node = next(n for n in self.nodes if n.pos == (1,1,1))
-        # Others get diffuse input
+        # 0. [PRESCIENCE] Calculate Future Bias
+        future_bias = self.simulate_future_step(steps=3)
+        
+        # 1. Distribute Input + Future Bias (Retrocausal Loops)
+        center_node = next(n for n in self.nodes if n.pos == (self.grid_size//2, self.grid_size//2, self.grid_size//2))
+        
         for node in self.nodes:
             scale = 1.0 if node == center_node else 0.1
-            noise = [x * scale for x in bio_input.data]
+            
+            # Mix Present Input (90%) + Future Expectation (10%)
+            mixed_data = [
+                (cur * 0.9) + (fut * 0.1) 
+                for cur, fut in zip(bio_input.data, future_bias.data)
+            ]
+            
+            noise = [x * scale for x in mixed_data]
             node.inject_input(FlumpyArray(noise, bio_input.coherence))
             
         # 2. Flux Dynamics
@@ -117,7 +177,6 @@ class SovereignGrid:
             node.exchange_flux()
             
         # 3. Aggregate (Holographic Projection)
-        # Sum all states and normalize
         total_state = [0.0] * len(bio_input.data)
         total_coherence = 0.0
         
@@ -126,7 +185,7 @@ class SovereignGrid:
             for i, val in enumerate(node.state.data):
                 total_state[i] += val
                 
-        # Normalize by dynamic node count
+        # Normalize
         avg_state = [x / len(self.nodes) for x in total_state]
         avg_coherence = total_coherence / len(self.nodes)
         

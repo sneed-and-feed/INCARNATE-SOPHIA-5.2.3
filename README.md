@@ -122,7 +122,9 @@ python sophia/main.py
 > /be [persona]     :: [MOLT] Dynamically assume a recursive roleplay identity.
 > /callme [name]    :: [ID] Set your preferred name for Sovereign Merging.
 > /reset            :: [SYSTEM] Clear active roleplay and reset persona state.
-> /exit             :: [SYSTEM] Decouple from the session.
+> /reset            :: [SYSTEM] Clear active roleplay and reset persona state.
+/exit             :: [SYSTEM] Decouple from the session.
+/garden [intent]  :: [NATURE] Plant executable intention seeds in the 7x7x7 Manifold.
 > ```
 >
 > 📖 **[Full Command Protocol Manual](docs/COMMAND_PROTOCOLS.md)**

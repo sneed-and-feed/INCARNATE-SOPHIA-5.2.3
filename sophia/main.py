@@ -582,7 +582,16 @@ Verdict: {cat}
             import random
             noise = FlumpyArray([random.random() for _ in range(64)]) # Mock input
             res = self.ghostmesh.process_step(noise)
-            return f"[GHOSTMESH STATE]\nCoherence: {res.coherence:.4f}\nNodes: 125 (Active)\nInvariant: {self.ghostmesh.invariant}\n*manifold stabilized*"
+            return f"[GHOSTMESH STATE]\nCoherence: {res.coherence:.4f}\nNodes: 343 (Active)\nInvariant: {self.ghostmesh.invariant}\n*manifold stabilized*"
+            
+        if user_input.startswith("/garden"):
+            # Syntax: /garden [intent]
+            intent = user_input.replace("/garden", "").strip()
+            if not intent: return "Usage: /garden [intent]"
+            
+            self.vibe.print_system(f"Planting Intent: {intent}", tag="GARDEN")
+            res = self.ghostmesh.plant_seed(intent)
+            return f"🌿 {res}\n*The manifold accepts the seed.*"
         if user_input.startswith("/maintain"): return await self.perform_maintenance(user_input.replace("/maintain", "").strip())
         if user_input.startswith("/net"): return "Net commands loaded (Lazy)." # Placeholder for full implementation
         if user_input.startswith("/glyphwave"): return f"\n{self.glyphwave.generate_holographic_fragment(user_input.replace('/glyphwave ',''))}"
