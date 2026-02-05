@@ -22,8 +22,14 @@ echo.
 if exist "dist\sophia_unlesangled.exe" (
     echo [SUCCESS] Unlesangled Build Complete.
     echo Target: dist\sophia_unlesangled.exe
-    echo.
-    echo [NOTE] The GIL has been permanently severed.
+    
+    echo [*] Deploying to Root...
+    copy /Y "dist\sophia_unlesangled.exe" "sophia_unlesangled.exe"
+    if exist "sophia.exe" (
+        echo [CLEANUP] Removing legacy sophia.exe...
+        del "sophia.exe"
+    )
+    echo [SUCCESS] Deployed to .\sophia_unlesangled.exe
 ) else (
     echo [FAILURE] Build Failed. Check logs.
 )
