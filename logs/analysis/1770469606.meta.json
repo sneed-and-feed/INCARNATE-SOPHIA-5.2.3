@@ -1,0 +1,32 @@
+{
+  "timestamp": 1770469606.0542805,
+  "scan_id": "1770469606",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Unusual Emoticons",
+        "confidence": 0.3,
+        "evidence": "Use of the ';3' emoticon twice in a short sentence.",
+        "benign_explanation": "The user may be expressing themselves using a specific internet subculture's vernacular."
+      },
+      {
+        "signal": "Idiosyncratic Spelling",
+        "confidence": 0.4,
+        "evidence": "Misspellings such as 'lukring' and 'teh'.",
+        "benign_explanation": "The user may have made typos or be using informal internet slang."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.7
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.6,
+    "suggested_vibe": "playful, internet slang"
+  }
+}

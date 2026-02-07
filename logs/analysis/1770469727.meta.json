@@ -1,0 +1,26 @@
+{
+  "timestamp": 1770469727.741977,
+  "scan_id": "1770469727",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Uncommon abbreviation",
+        "confidence": 0.4,
+        "evidence": "Use of 'FWBs' abbreviation.",
+        "benign_explanation": "The user may be using common internet abbreviations to save time or due to familiarity with online slang."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.9
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.6,
+    "suggested_vibe": "youthful, internet-mediated"
+  }
+}

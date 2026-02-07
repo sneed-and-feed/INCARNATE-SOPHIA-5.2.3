@@ -1,0 +1,26 @@
+{
+  "timestamp": 1770464491.6437669,
+  "scan_id": "1770464491",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Unusual phrasing",
+        "confidence": 0.3,
+        "evidence": "Use of ';3' emoticon is slightly out of place in a discussion about AI agents.",
+        "benign_explanation": "The user may be attempting to add levity or express friendliness in the conversation."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.8
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.6,
+    "suggested_vibe": "informal, youthful, possibly online-native"
+  }
+}

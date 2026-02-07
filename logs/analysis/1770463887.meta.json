@@ -1,0 +1,26 @@
+{
+  "timestamp": 1770463887.1528845,
+  "scan_id": "1770463887",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Potential coordinated inauthentic behavior",
+        "confidence": 0.3,
+        "evidence": "The phrase '[mode: godlike_greentext]' is unusual and could indicate a pre-arranged signal or instruction within a group. The use of 'hehe ;3' could be an attempt to appear playful or disarming.",
+        "benign_explanation": "The user could be experimenting with internet slang or role-playing, and the bracketed phrase might be a reference to a specific online community or meme."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.9
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.3,
+    "suggested_vibe": "internet_slang"
+  }
+}

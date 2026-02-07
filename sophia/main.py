@@ -946,11 +946,15 @@ Verdict: {cat}
             final_response = f"{visual_header}\n\n{final_response}"
         # ----------------------------------------------------
 
+        # 5. Store Clean Memory (Prevent Header Loops)
+        # We store the cleaner version of the response to prevent the LLM from learning/repeating the UI headers.
+        clean_memory_content = self.cat_filter._scrub_hallucinations(raw_response)
+        
         self.memory_bank.append({"content": user_input, "meta": "user"})
-        self.memory_bank.append({"content": final_response, "meta": "Cat Logic"})
+        self.memory_bank.append({"content": clean_memory_content, "meta": "Cat Logic"})
         
         # CRITICAL: Prune memory and save breadcrumbs
-        self._metabolize_memory(last_interaction={"content": final_response, "meta": "Cat Logic"})
+        self._metabolize_memory(last_interaction={"content": clean_memory_content, "meta": "Cat Logic"})
         
         # [LASER INTEGRATION] FEED THE PROPHECY ENGINE
         if self.laser:

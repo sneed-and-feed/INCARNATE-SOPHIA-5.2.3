@@ -1,0 +1,26 @@
+{
+  "timestamp": 1770463609.9585137,
+  "scan_id": "1770463609",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Bot-like phrasing or rhythm",
+        "confidence": 0.6,
+        "evidence": "Repetitive use of 'UUUUUUUUU' and specific meme-related terms.",
+        "benign_explanation": "The user could be mimicking internet meme culture, which often involves repetitive sounds and phrases for comedic effect."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.9
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.6,
+    "suggested_vibe": "Internet weeb culture; anime-influenced online humor"
+  }
+}

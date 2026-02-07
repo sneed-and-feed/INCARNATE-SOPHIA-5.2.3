@@ -1,0 +1,28 @@
+{
+  "timestamp": 1770469811.494304,
+  "scan_id": "1770469811",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Bot-like phrasing or rhythm",
+        "confidence": 0.6,
+        "evidence": "The phrase 'cloud compute rhythem and sound - see mi yah' appears somewhat disjointed and lacks typical grammatical structure, potentially resembling machine-generated text.",
+        "benign_explanation": "The unusual phrasing could be an attempt at creative or artistic expression, such as a song lyric or poem, or simply a non-standard way of communicating a thought."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.9
+  },
+  "localization": {
+    "locality": "jamaica",
+    "dialect_markers": [
+      "yah"
+    ],
+    "confidence": 0.8,
+    "suggested_vibe": "relaxed, informal, island"
+  }
+}

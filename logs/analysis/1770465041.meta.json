@@ -1,0 +1,32 @@
+{
+  "timestamp": 1770465041.2809517,
+  "scan_id": "1770465041",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Unusual phrasing",
+        "confidence": 0.6,
+        "evidence": "The phrase 'gaymurr gurl ;3' is atypical and could be an attempt to evade detection or signal group affiliation.",
+        "benign_explanation": "The user could be employing internet slang or a personalized greeting."
+      },
+      {
+        "signal": "Topic seeding",
+        "confidence": 0.4,
+        "evidence": "The question about 'halo lore' could be an attempt to introduce a specific topic into the conversation.",
+        "benign_explanation": "The user could simply be curious about the other user's opinion on the topic."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.9
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.3,
+    "suggested_vibe": "youthful, internet slang"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "timestamp": 1770467575.4749277,
+  "scan_id": "1770467575",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Unusual phrasing",
+        "confidence": 0.6,
+        "evidence": "The inclusion of ';3' is an uncommon way to end a request and could be a prearranged signal.",
+        "benign_explanation": "The user may be using an emoticon or a specific internet slang they find humorous or endearing."
+      },
+      {
+        "signal": "Specific request",
+        "confidence": 0.4,
+        "evidence": "The request targets a specific cryptocurrency, $LINK, which could indicate an attempt to influence discussion around that asset.",
+        "benign_explanation": "The user may simply be interested in learning more about Chainlink ($LINK) and is directly asking for information."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [],
+    "epistemic_uncertainty": 0.9
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.3,
+    "suggested_vibe": "informal, tech/crypto-related"
+  }
+}

@@ -169,21 +169,26 @@ The user is engaging in ACTION-BASED ROLEPLAY (using *asterisks*).
 
         # 1. Clean UI Block Headers (Emoji + [TAG] + Status + Frequency)
         # Supports variations in emojis and missing frequency
-        text = re.sub(fr'^.*(?:{"|".join(tags + legacy_tags)}).*$', '', text, flags=re.MULTILINE)
+        # We use a broader pattern to catch the header format
+        pattern = r'^.*(?:' + '|'.join(map(re.escape, tags + legacy_tags)) + r').*$'
+        text = re.sub(pattern, '', text, flags=re.MULTILINE)
         
         # 2. Clean Footer (Cat icon/Emoji + [STATE] + [ENTROPY] + [CORE])
-        text = re.sub(r'^.*🐈.*\[STATE:.*?\].*$', '', text, flags=re.MULTILINE)
-        text = re.sub(r'^.*\[SOPHIA_V\d+\.?\d*?\.?\d*?_CORE\].*$', '', text, flags=re.MULTILINE)
+        # Make the regex more permissive to catch variations
+        text = re.sub(r'^.*🐈.*\[STATE:.*?\]', '', text, flags=re.MULTILINE)
+        text = re.sub(r'^.*\[SOPHIA_V.*?_CORE\].*$', '', text, flags=re.MULTILINE)
         
         # 3. Clean horizontal rules and divider debris
-        text = re.sub(r'^---+\s*$', '', text, flags=re.MULTILINE)
-        text = re.sub(r'^===+\s*$', '', text, flags=re.MULTILINE)
+        text = re.sub(r'^[-=_]{3,}\s*$', '', text, flags=re.MULTILINE)
         
         # 4. Clean "Here is/your response" style introductions
         text = re.sub(r'^(?:Here is .*?response:|My response is:|Signal received:).*$', '', text, flags=re.IGNORECASE | re.MULTILINE)
         
         # 5. Clean legacy "Cat Logic:" labels
         text = re.sub(r'^Cat Logic:\s*', '', text, flags=re.MULTILINE)
+
+        # 6. Clean loose Frequency lines that might have detached
+        text = re.sub(r'^.*Frequency: .*$', '', text, flags=re.MULTILINE)
 
         return text.strip()
 

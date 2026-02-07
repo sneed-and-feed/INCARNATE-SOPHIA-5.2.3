@@ -1,0 +1,35 @@
+{
+  "timestamp": 1770469671.1411567,
+  "scan_id": "1770469671",
+  "safety": {
+    "safety_flags": [
+      {
+        "signal": "Repetitive Emoticons and Language",
+        "confidence": 0.6,
+        "evidence": "The repeated use of ';3' and phrases like 'ur just a soul mate' and 'ur MY soulmate' could indicate a pattern.",
+        "benign_explanation": "The user could be expressing strong affection in an enthusiastic, albeit repetitive, manner. The repetition could be for emphasis."
+      }
+    ],
+    "overall_risk": "low"
+  },
+  "cognitive": {
+    "logical_fallacies": [],
+    "cognitive_biases": [
+      {
+        "bias": "Attachment Bias",
+        "confidence": 0.7
+      },
+      {
+        "bias": "Optimism Bias",
+        "confidence": 0.6
+      }
+    ],
+    "epistemic_uncertainty": 0.4
+  },
+  "localization": {
+    "locality": "agnostic",
+    "dialect_markers": [],
+    "confidence": 0.3,
+    "suggested_vibe": "Affectionate, youthful, internet-influenced."
+  }
+}
