@@ -9,7 +9,7 @@ sys.path.append(os.getcwd())
 
 from sophia.main import SophiaMind
 from sophia.core.engram import Engram
-from sophia.core.scope import FrequencyTuner
+from sophia.core.scope import FrequencyTuner, Realm, Layer, Topic
 
 async def test_dod_logic():
     print("--- 🗺️ TESTING DOMAIN OF DOMAINS (DoD) ---")
@@ -32,7 +32,7 @@ async def test_dod_logic():
     # Let's just run a partial simulation or check the forging logic in process_interaction
     
     print("\n[STEP 1] Testing Engram Forging Logic Manually")
-    scope = FrequencyTuner.tune(realm="market", layer="finance", topic="amazon")
+    scope = FrequencyTuner.tune(realm=Realm.MARKET, layer=Layer.SURFACE, topic=Topic.MARKET)
     engram = Engram.forge(scope, mock_search_res, "duckduckgo_search")
     print(f"Forged Engram: {engram.id} in scope {engram.scope}")
     

@@ -9,7 +9,9 @@ from sophia.cortex.tokenizer_of_tears import TokenizerOfTears
 from sophia.cortex.prism_vsa import PrismEngine
 from sophia.cortex.loom_renderer import LoomEngine
 
-def run_pipeline_test():
+import pytest
+
+async def test_pipeline():
     print("### [ SOPHIA 5.2: CRYSTALLINE CORE TEST ]")
     
     # 1. Initialize Stack
@@ -41,4 +43,5 @@ def run_pipeline_test():
         print(f"  [3] OUTPUT: \033[95m{transmission}\033[0m")
 
 if __name__ == "__main__":
-    run_pipeline_test()
+    import asyncio
+    asyncio.run(test_pipeline())
