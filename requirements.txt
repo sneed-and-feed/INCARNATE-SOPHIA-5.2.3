@@ -4,3 +4,5 @@ requests
 python-dotenv
 rich
 ddgs
+fastapi
+uvicorn
