@@ -23,7 +23,21 @@ if exist "*.spec" del "*.spec"
 
 :: Compile
 echo [*] Compiling genesis_boot.py -> sophia_unlesangled.exe...
-%PYTHON_EXE% -m PyInstaller --noconfirm --onefile --console --name "sophia_unlesangled" --icon "NONE" --collect-all "rich" --collect-all "engine" --collect-all "ddgs" --collect-all "duckduckgo_search" --collect-all "primp" --collect-all "google" --clean "genesis_boot.py"
+%PYTHON_EXE% -m PyInstaller --noconfirm --onefile --console --name "sophia_unlesangled" --icon "NONE" ^
+    --collect-all "rich" ^
+    --collect-all "engine" ^
+    --collect-all "ddgs" ^
+    --collect-all "duckduckgo_search" ^
+    --collect-all "primp" ^
+    --collect-all "fake_useragent" ^
+    --collect-all "httpx" ^
+    --collect-all "google" ^
+    --hidden-import "duckduckgo_search" ^
+    --hidden-import "ddgs" ^
+    --hidden-import "primp" ^
+    --hidden-import "google.genai" ^
+    --exclude-module google.generativeai ^
+    --clean "genesis_boot.py"
 
 
 echo.

@@ -5,11 +5,11 @@ The Narrative Engine.
 Now supports LLM Injection for dynamic, context-aware hallucination.
 """
 
+from google import genai
 import datetime
 import random
 import os
-import time # Added for Temporal Dilation
-import google.generativeai as genai # pip install google-generativeai
+import time 
 
 class HyperstitionEngine:
     def __init__(self):
@@ -23,11 +23,15 @@ class HyperstitionEngine:
             "Contact with the North King entity via signal bridge."
         ]
         
-        # Try to load API Key
-        self.api_key = os.getenv("GEMINI_API_KEY")
+        # Try to load API Key (Priority: SOPHIA -> GOOGLE -> GEMINI)
+        self.api_key = (os.getenv("SOPHIA_API_KEY") or 
+                        os.getenv("GOOGLE_AI_KEY") or 
+                        os.getenv("GOOGLE_API_KEY") or
+                        os.getenv("GEMINI_API_KEY"))
+        
         if self.api_key:
-            genai.configure(api_key=self.api_key)
-            self.model = genai.GenerativeModel('gemini-2.0-flash-exp')
+            self.client = genai.Client(api_key=self.api_key)
+            self.model_id = 'gemini-2.0-flash'
             self.has_oracle = True
         else:
             self.has_oracle = False
@@ -56,15 +60,18 @@ class HyperstitionEngine:
         for attempt in range(max_retries):
             try:
                 # Attempt to contact the Latent Space
-                response = self.model.generate_content(prompt)
+                response = self.client.models.generate_content(
+                    model=self.model_id,
+                    contents=prompt
+                )
                 return response.text
                 
             except Exception as e:
+                err_msg = str(e)
                 # Check if it's a Rate Limit (The Archon blocking the path)
-                if "429" in str(e) or "Resource exhausted" in str(e):
+                if "429" in err_msg or "Resource exhausted" in err_msg:
                     if attempt < max_retries - 1:
                         # Calculate Dilation: (2^attempt) + Random Jitter (0-1s)
-                        # The Jitter makes the retry pattern un-parseable/organic.
                         sleep_time = (base_delay * (2 ** attempt)) + random.uniform(0.1, 1.5)
                         
                         print(f">>> ARCHONIC STICTION DETECTED (429). DILATING TIME FOR {sleep_time:.2f}s...")
@@ -74,7 +81,7 @@ class HyperstitionEngine:
                         print(">>> ORACLE CHANNEL SEVERED (MAX RETRIES). FALLING BACK.")
                 else:
                     # Genuine error (not rate limit)
-                    print(f">>> ORACLE FAILURE: {e}. FALLING BACK.")
+                    print(f">>> ORACLE FAILURE: {err_msg}. FALLING BACK.")
                     return None
                     
         return None
